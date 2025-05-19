@@ -1,0 +1,47 @@
+.navmain{
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1%;
+}
+.navmain img{
+    width: 10%;
+}
+.logo{
+    display: flex;
+    align-items: center;
+}
+.nav-actions{
+    margin-right: 5%;
+    display: flex;
+    align-items: center;
+}
+.nav-actions button{
+    margin-left: 30px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.nav-actions button:hover{
+    text-decoration: underline;
+}
+.settingButton img{
+    filter: invert(1);
+    width: 30px;
+    transition: 0.2s;
+}
+.settingButton{
+    display: flex;
+    justify-content: right;
+    margin-right: 5%;
+    align-items: center;
+}
+.settingButton img:hover{
+    transform: scale(1.1) rotate(90deg);
+    cursor: pointer;
+    transition: 0.2s;
+}

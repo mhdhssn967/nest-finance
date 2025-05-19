@@ -1,0 +1,31 @@
+.addExp{
+    display: flex;
+    /* margin-left: 10px; */
+    align-items: center;
+    width: 1000px;
+    justify-content: left;
+}
+.add{
+    padding: 2%;
+    margin: 10px;
+    color: rgb(24, 24, 24);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    background: var(--accent-color) !important;
+    border-radius: 10px;
+    width: 150px;
+    border: solid black 0.5px !important;
+    transition: 0.2s;
+    cursor: pointer;
+    text-wrap: nowrap;
+}
+.add:hover{
+    transition: 0.2s;
+    color: black;
+    background-color: white !important;
+}
+
+.add:active{
+    transform: scale(0.9);
+}

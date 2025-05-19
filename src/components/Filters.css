@@ -1,0 +1,15 @@
+.filter-div{
+    margin: 2%;
+}
+.filter-div label{
+    margin-left: 1%;
+}
+.filter-div input{
+    background-color: var(--secondary-color);
+    border: solid black 0.5px;
+    width: 300px;
+}
+.filter-div input,.filter-div select{
+    padding: 0.3%;    border-radius: 10px;
+
+}

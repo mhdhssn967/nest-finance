@@ -1,0 +1,155 @@
+select{
+    background-color: var(--secondary-color);
+    /* border-radius: 10px; */
+    border: solid 0.5px black;
+    transition: 0.3s;
+    outline: none;
+}
+
+option{
+    background-color: rgb(241, 241, 241);
+    border-radius: 10px;
+    border: solid 1px white;
+}
+.tableDiv{
+    margin-left: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 96%;
+    font-size: 14px;
+}
+.tableDiv table{
+    text-align: center;
+    background-color: rgb(85, 83, 83);
+    border: none
+}
+.tableDiv thead tr{
+    background-color: var(--accent-color);
+    position: sticky;
+    top: 0px;
+}
+.tableDiv th{
+    font-weight: 500;
+}
+.tableDiv th,td{
+    padding: 1%;
+}
+.tableDiv tr{
+    background-color: rgb(247, 241, 241);
+    transition: 0.2s;
+    cursor: pointer;
+}
+.tableDiv tbody tr:hover{
+    background-color: rgb(212, 211, 209);
+    transition: 0.2s;
+}
+.actionCell i{
+    font-size: 20px;
+    margin-top: 10px;
+}
+.actionCell{
+    display: flex; 
+    padding: 5px;
+    justify-content: space-evenly;
+}
+.actionCell i:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.actionCell .fa-pen-to-square:hover{
+    color: var(--primary-color);
+}
+.actionCell .fa-trash:hover{
+    color: red;
+}
+.insightButtons{
+    display: flex;
+    /* flex-direction: column; */
+    align-items: start;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1% 15% 0.5% 0%;
+    margin-left: 3.5%;
+}
+.insightButtons img{
+    width: 400px;
+}
+.insightButtons button{
+    display: flex;
+    align-items: center;
+    color: black;
+    background-color: var(--accent-color);
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    height: 35px;
+    font-weight: 700;
+}
+.insightsDiv{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+}
+.tableDiv h2{
+    text-align: center;
+    background-color: var(--primary-color);
+    color: rgb(255, 255, 255);
+    border-bottom: none;
+    font-weight: 600;
+    padding: 1%;
+    font-size: 25px;
+}
+.insightButtons table{
+    width: 800px;
+}
+.insightButtons table tr{
+    background: none;
+}
+.edit-row input{
+    background-color: var(--primary-color);
+}
+.edit-input{
+    background-color: rgb(255, 255, 255);
+    border: solid 0.5px;
+    border-radius: 3px;
+    padding: 6px;
+    font-weight: 600;
+}
+.tableDiv table tr td select{
+    background-color: rgb(255, 255, 255);
+    border: solid 0.5px;
+    border-radius: 3px;
+    padding: 6px;
+    font-weight: 600;
+}
+.edit-btn{
+    /* background-color: rgb(255, 255, 255); */
+    border: none;
+    padding: 3px;
+    width: 25px;
+    text-align: center;
+    font-weight: 600;
+}
+.edit-btns button{
+    margin: 0% 6%;
+    cursor: pointer;
+}
+.edit-btns{
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+}
+.tableDiv table
+ {
+    border: none ;
+    border-collapse: collapse;
+}
+.tableDiv table tr{
+    border-bottom: solid 0.1px;
+}

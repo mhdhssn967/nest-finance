@@ -1,0 +1,24 @@
+*{
+  margin :0px;
+  font-family: "Manrope", sans-serif;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: rgb(49, 49, 49);
+}
+body{
+  background-color: var(--background-color);
+}
+button:hover{
+  transform: scale(1.05);
+  transition: 0.1s;
+}
+button:active{
+  transform: scale(.95);
+  transition: 0.1s;
+}
+:root{
+  --primary-color:rgb(75, 121, 102);
+  --accent-color:rgb(155, 206, 149);
+  --secondary-color:rgb(235, 248, 235);
+  --background-color:rgb(255, 255, 255);
+}

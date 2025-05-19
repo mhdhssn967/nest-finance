@@ -1,0 +1,62 @@
+.input-picker{
+    padding: 5px;
+    margin: 1%;
+    border: solid rgb(8, 8, 8) 0.5px;
+    /* filter: invert(1); */
+    background-color: var(--secondary-color);
+    width: 120px;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+}
+label{
+    margin-left: 2%;
+}
+.chart-head{
+    display: flex;
+    justify-content: space-evenly;
+    margin: auto 20%;
+    font-size: 20px;
+    text-wrap: nowrap;
+}
+.chart-head h2{
+    font-weight: 100;
+}
+.chart-main{
+    align-items: center;
+    width: fit-content;
+    transform: scale(0.8);
+}
+.donuts{
+    border-radius: 100px;
+}
+.total-value{
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.chart-container{
+    display:flex;
+    flex-wrap: wrap;
+}
+.field-filter{
+    display: flex;
+    padding: 2%;
+}
+
+.fields-set{
+    margin-right: 1%;
+    border: solid 0.5px;
+    padding: 0.5%;
+    border-radius: 30px;
+    font-size: 13px;
+}
+
+.checkbox-container{
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+}
+.chart-div{
+    display: flex;
+    align-items: center;
+    transform: scale(0.9);
+}

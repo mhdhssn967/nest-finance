@@ -1,0 +1,41 @@
+.act-btn{
+    margin: 1%;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 2px;
+    color: black;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
+    width: fit-content;
+    cursor: pointer;
+    padding: 0.4%;
+    font-weight: 600;
+}
+.act-btn i{
+    color: black;
+    margin: 1%;
+}
+.download-btn{
+    background-color: black;
+    padding: 0.5%;
+    font-weight: 600;
+    border: solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1;
+}
+.download-btn:hover{
+    filter: invert(1);
+}
+.download-div{
+    width: 100vw;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    top: 0px;
+    /* background-color: rgba(0, 0, 0, 0.8); */
+}

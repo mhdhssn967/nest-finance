@@ -1,0 +1,66 @@
+/* Full Screen Container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Login Box */
+  .login-box {
+    background: var(--accent-color);
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+    width: 450px;
+  }
+  .error-message{
+    color: red;
+  }
+  /* Heading */
+  .login-box h2 {
+    color: rgb(14, 14, 14);
+    margin-bottom: 20px;
+  }
+  
+  /* Input Fields */
+  .input-field {
+    width: 95%;
+    background: transparent;
+    color: white;
+    border: none;
+    border-bottom: 2px solid white;
+    padding: 10px;
+    margin-bottom: 20px;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  /* Button */
+  .login-button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: rgb(255, 255, 255);
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+  
+  .login-button:hover {
+    background: #ffffff;
+    /* transform: scale(1.05); */
+    color: black;
+  }
+  
+  /* Forgot Password */
+  .forgot-password {
+    color: white;
+    margin-top: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
