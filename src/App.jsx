@@ -1,20 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom"; // Removed unnecessary BrowserRouter import
+// App.js
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import Insights from "./pages/Insights";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null); // State to track user authentication
-  const navigate = useNavigate(); // Hook to navigate to different routes
-
-
-
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<HomePage />} />
-      <Route path="/home/insights" element={<Insights />} />
+
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/home/insights"
+        element={
+          <ProtectedRoute>
+            <Insights />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

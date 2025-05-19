@@ -21,6 +21,16 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+  const unsubscribe = auth.onAuthStateChanged((user) => {
+    if (user) {
+      navigate("/");
+    }
+  });
+
+  return () => unsubscribe(); // cleanup
+}, [navigate]);
+
   return (
     <div className="login-container">
       <div className="login-box">
