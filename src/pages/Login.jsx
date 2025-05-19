@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password); // Firebase login
-      navigate("/home"); // Redirect to home page after successful login
+      navigate("/"); // Redirect to home page after successful login
     } catch (error) {
       setError("Invalid email or password!");
     }
