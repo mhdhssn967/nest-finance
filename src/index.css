@@ -28,7 +28,7 @@ button:active{
  } 
  body{
   width: 100vw;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
  }
  :root{
  --secondary-color:rgb(255, 255, 255);
