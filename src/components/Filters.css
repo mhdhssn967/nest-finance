@@ -11,5 +11,19 @@
 }
 .filter-div input,.filter-div select{
     padding: 0.3%;    border-radius: 10px;
-
+}
+@media (max-width:600px) {
+    #searchFilter{
+        width: 95%;
+        border-radius: 2px;
+        margin-bottom: 20px;
+    }
+    select{
+        width: 100px;
+        border-radius: 4px !important;
+    }
+    .input-picker{
+        padding: 2px !important;
+        margin: 20px 5px !important;
+    }
 }

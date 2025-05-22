@@ -13,7 +13,7 @@ const Navbar = ({settingsView,setSettingsView}) => {
      <div className='navmain'>
         <div className='logo'>
           <img src={OQLogo} alt="Oqulix Logo" />
-          <h2 style={{color:'white',fontSize:'30px'}}>Oqulix Finance</h2>
+          <h2 style={{color:'white',margin:'10px'}}>Oqulix Finance</h2>
         </div>
         <div className='nav-actions'>
           <div className='settingButton'><img onClick={()=>settingsView?setSettingsView(false):setSettingsView(true)} src={settingsView?close:setting} alt="" /></div>

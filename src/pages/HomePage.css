@@ -8,4 +8,14 @@
     height: 80vh;
     z-index: 1;
 }
-
+.comp-name{
+    font-size: 65px;
+}
+@media (max-width: 600px) {
+ .comp-name{
+    font-size: 30px;
+    margin: 2%;
+ }body{
+    background-color: aliceblue;
+ }
+}

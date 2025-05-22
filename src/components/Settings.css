@@ -115,3 +115,9 @@
 .settingsPage div h2{
     font-weight: 200;
 }
+
+@media (max-width:600px) {
+    .settingsPage{
+        max-width: 85vw;
+    }
+}

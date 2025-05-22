@@ -63,4 +63,8 @@
     cursor: pointer;
     text-decoration: underline;
   }
-  
+  @media (max-width: 600px) {
+  body{
+    background-color: var(--accent-color);
+  }
+}

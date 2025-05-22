@@ -60,3 +60,20 @@ label{
     align-items: center;
     transform: scale(0.9);
 }
+@media (max-width:600px){
+    .chart-container{
+        width: 100vw !important;
+
+    }
+    .chart-main{
+        margin-left: -200px;
+    }
+    .chart-div{
+        flex-direction: column;
+        justify-content: center;
+    }
+    .line-graph{
+        margin-left: -200px;
+        transform: scale(0.5);
+    }
+}

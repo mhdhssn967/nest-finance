@@ -215,9 +215,9 @@ const ExpenseTable = ({preferences }) => {
 
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '60px', alignItems: 'center' }}><AddExpense onExpenseAdded={handleExpenseAdded} preferences={preferences} /></div>
+      <div className='add-exp-buttons' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><AddExpense onExpenseAdded={handleExpenseAdded} preferences={preferences} /></div>
       <div style={{ display: 'flex', alignItems: 'center', width: '100vw', justifyContent: 'center' }}>
-        <h1 style={{ fontSize: '40px', textAlign: 'center' }}>Your Financial Report</h1>
+        <h1 className='finance-report-h1' style={{ textAlign: 'center' }}>Your Financial Report</h1>
         <div >
           <label style={{ margin: '20px 5px 10px 20px' }} htmlFor="view">View </label>
           <select name="" id="view" onChange={(e) => { setView(e.target.value) }}>
@@ -241,10 +241,9 @@ const ExpenseTable = ({preferences }) => {
 
 
       {/* \Expense table */}
-
+<h2 className='table-head'>Expense Overview</h2>
       {(view == "all" || view == "expenses") && (
         <div className='tableDiv'>
-          <h2>Expense Overview</h2>
           <table>
             <thead>
               <tr>
@@ -352,10 +351,10 @@ const ExpenseTable = ({preferences }) => {
 
       {/* Revenue Table */}
 
-
+   <h2 className='table-head0'>Revenue Overview</h2>
       {(view == "revenue" || view == "all") && (
         <div className='tableDiv'>
-          <h2>Revenue Overview</h2>
+       
           <table>
             <thead>
               <tr>

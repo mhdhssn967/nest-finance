@@ -67,7 +67,7 @@ const Insights = () => {
         <div className='download-div'><DownloadStatement setDownloadModal={setDownloadModal} preferences={preferences} allExpenses={allExpenses}/></div>}
       <Link to="/"><button className='act-btn'><i className="fa-solid fa-arrow-left"></i>Back to Home</button></Link>
       <div>
-      <h1 style={{fontSize:'60px', fontWeight:'100', textAlign:'center'}}>Financial Insights</h1>
+      <h1 className='finance-report-h1' style={{ fontWeight:'500', textAlign:'center'}}>Financial Insights</h1>
       <div style={{display:'flex',justifyContent:'right',width:'90%'}}>{
         !downloadModal?
         <button className='download-btn' onClick={()=>setDownloadModal(!downloadModal)}>Download Statement</button>:

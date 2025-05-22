@@ -96,7 +96,7 @@ option{
     display: flex;
     justify-content: center;
 }
-.tableDiv h2{
+.table-head{
     text-align: center;
     background-color: var(--primary-color);
     color: rgb(255, 255, 255);
@@ -113,6 +113,9 @@ option{
 }
 .edit-row input{
     background-color: var(--primary-color);
+}
+.finance-report-h1{
+    font-size: 40px;
 }
 .edit-input{
     background-color: rgb(255, 255, 255);
@@ -152,4 +155,31 @@ option{
 }
 .tableDiv table tr{
     border-bottom: solid 0.1px;
+}
+.add-exp-buttons{
+    margin-left: 40px;
+}
+@media (max-width: 600px) {
+.tableDiv table
+ {
+    border: none ;
+    width: 150%;
+
+ }
+ .tableDiv{
+    width: 100%;
+    overflow-x: scroll;
+    margin: 0px;
+ }
+ .finance-report-h1{
+    font-size: 20px;
+    margin: 10px;
+}
+.insight-table button{
+    text-wrap: nowrap;
+}
+.add-exp-buttons{
+    margin-left: 0px;
+    transform: scale(0.9);
+}
 }

@@ -19,6 +19,8 @@
     transition: 0.2s;
     cursor: pointer;
     text-wrap: nowrap;
+    width: 180px;
+    height: 20px;
 }
 .add:hover{
     transition: 0.2s;
@@ -28,4 +30,11 @@
 
 .add:active{
     transform: scale(0.9);
+}
+@media (max-width:600px) {
+    .add{
+        margin: 5px;
+        border-radius: 5px;
+    }
+
 }

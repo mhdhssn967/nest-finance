@@ -22,3 +22,15 @@ button:active{
   --secondary-color:rgb(235, 248, 235);
   --background-color:rgb(255, 255, 255);
 }
+@media (max-width: 600px) {
+ *{
+  font-size: 12px;
+ } 
+ body{
+  width: 100vw;
+  overflow-x: hidden;
+ }
+ :root{
+ --secondary-color:rgb(255, 255, 255);
+ }
+}
