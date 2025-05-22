@@ -9,8 +9,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
-        name: 'My Vite React App',
-        short_name: 'ViteApp',
+        name: 'Nest Finance',
+        short_name: 'Nest Finance',
         description: 'My Vite-powered React Progressive Web App!',
         theme_color: '#ffffff',
         background_color: '#ffffff',
