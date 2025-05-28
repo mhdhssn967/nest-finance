@@ -17,6 +17,10 @@
     color: black;
     margin: 1%;
 }
+body{
+    width: 100vw;
+    overflow-x: hidden;
+}
 .download-btn{
     background-color: black;
     padding: 0.5%;
