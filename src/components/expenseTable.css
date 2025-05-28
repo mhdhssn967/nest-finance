@@ -182,8 +182,9 @@ option{
     margin: 0px;
  }
  .finance-report-h1{
-    font-size: 20px;
+    font-size: 15px;
     margin: 10px;
+    font-weight: 800;
 }
 .insight-table button{
     text-wrap: nowrap;

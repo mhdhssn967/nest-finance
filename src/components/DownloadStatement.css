@@ -100,11 +100,13 @@
     color: white;
   }
   
-  .download-btn:hover {
-    background-color: #019ca3;
-  }
+
   
   .cancel-btn:hover {
     background-color: #2c2f36;
   }
-  
+  @media (max-width:600px) {
+    .download-modal{
+      transform: scale(0.9);
+    }
+  }

@@ -10,6 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { Link } from 'react-router-dom';
 import DownloadStatement from '../components/DownloadStatement';
+import data from '../assets/data.webp'
 
 
 
@@ -65,14 +66,16 @@ const Insights = () => {
       <div><Navbar/></div>
       {downloadModal&&
         <div className='download-div'><DownloadStatement setDownloadModal={setDownloadModal} preferences={preferences} allExpenses={allExpenses}/></div>}
-      <Link to="/"><button className='act-btn'><i className="fa-solid fa-arrow-left"></i>Back to Home</button></Link>
+      <div className='insight-navbar'>
+        <Link to="/"><button className='act-btn'><i className="fa-solid fa-arrow-left"></i>Back to Home</button></Link>
+        <div style={{display:'flex',justifyContent:'right',width:'90%'}}>{
+          !downloadModal&&
+          <button title='Download Statement' className='download-stmnt' onClick={()=>setDownloadModal(!downloadModal)}> <img src={data} alt="" /> </button>
+          }</div>
+      </div>
       <div>
       <h1 className='finance-report-h1' style={{ fontWeight:'500', textAlign:'center'}}>Financial Insights</h1>
-      <div style={{display:'flex',justifyContent:'right',width:'90%'}}>{
-        !downloadModal?
-        <button className='download-btn' onClick={()=>setDownloadModal(!downloadModal)}>Download Statement</button>:
-        <button className='download-btn' onClick={()=>setDownloadModal(!downloadModal)}>Close</button>
-        }</div>
+      
       <Charts preferences={preferences} setDate={setDate} date={date} insightData={insightData} displayExpenses={displayExpenses} setDisplayExpenses={setDisplayExpenses}/>
     </div>
     </>

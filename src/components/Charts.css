@@ -81,5 +81,19 @@ label{
     .total-value{
         font-size: 50px;
     }
+    .input-picker{
+        width: 80px;
+    }
+    .field-filter{
+        justify-content: center;
+    }
+    .date-picker-div{
+        justify-content: center;
+        display: flex;
+        align-items: center;
+    }
+    .checkbox-container{
+        justify-content: center;
+    }
 
 }
