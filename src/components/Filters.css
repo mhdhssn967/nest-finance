@@ -5,7 +5,7 @@
     margin-left: 1%;
 }
 .filter-div input{
-    background-color: var(--secondary-color);
+    background-color: white;
     border: solid black 0.5px;
     width: 300px;
 }

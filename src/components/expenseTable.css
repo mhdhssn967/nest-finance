@@ -1,5 +1,5 @@
 select{
-    background-color: var(--secondary-color);
+    background-color: white;
     /* border-radius: 10px; */
     border: solid 0.5px black;
     transition: 0.3s;
@@ -12,11 +12,10 @@ option{
     border: solid 1px white;
 }
 .tableDiv{
-    margin-left: 1%;
     display: flex;
     flex-direction: column;
     align-items: left;
-    width: 96%;
+    width: 100%;
     font-size: 14px;
 }
 .tableDiv table{
@@ -36,7 +35,7 @@ option{
     padding: 1%;
 }
 .tableDiv tr{
-    background-color: rgb(247, 241, 241);
+    background-color: rgb(255, 255, 255);
     transition: 0.2s;
     cursor: pointer;
 }
@@ -158,6 +157,17 @@ option{
 }
 .add-exp-buttons{
     margin-left: 40px;
+}
+.homepage-insights{
+    text-align: center;
+}
+.homepage-insights button{
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    margin: 2%;
+    padding: 1% 2%;
 }
 @media (max-width: 600px) {
 .tableDiv table

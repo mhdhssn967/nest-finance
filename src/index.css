@@ -7,6 +7,9 @@
 }
 body{
   background-color: var(--background-color);
+  width: 100vw;
+  overflow-x: hidden;
+  margin-left: 40px;
 }
 button:hover{
   transform: scale(1.05);
@@ -17,9 +20,9 @@ button:active{
   transition: 0.1s;
 }
 :root{
-  --primary-color:rgb(75, 121, 102);
-  --accent-color:rgb(155, 206, 149);
-  --secondary-color:rgb(235, 248, 235);
+  --primary-color:rgb(78, 100, 129);
+  --accent-color:rgb(204, 222, 243);
+  --secondary-color:rgb(103, 131, 182);
   --background-color:rgb(255, 255, 255);
 }
 @media (max-width: 600px) {
@@ -29,6 +32,7 @@ button:active{
  body{
   width: 100vw;
   overflow-x: hidden;
+  margin-left: 0px;
  }
  :root{
  --secondary-color:rgb(255, 255, 255);

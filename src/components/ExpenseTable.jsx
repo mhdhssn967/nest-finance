@@ -193,7 +193,7 @@ const ExpenseTable = ({preferences }) => {
 
   return (
     <>
-      <div className='insightButtons'>
+      {/* <div className='insightButtons'>
         <table className='insight-table'>
           <tr>
             <td>Total expense of this month</td>
@@ -210,9 +210,15 @@ const ExpenseTable = ({preferences }) => {
             <td><Link to="/home/insights"><button> View more Insights</button></Link></td>
           </tr>
         </table>
-        {/* <img src={image} alt=""  /> */}
-        
+      </div> */}
 
+
+      <div className='homepage-insights'>
+        <h2>Total Expense of this month ₹{monthlyTotal}</h2>
+        <h2>Total Revenue Generated this month ₹{monthlyTotalRevenue}</h2>
+        <h3>Gross Expenses ₹{totalExpenses}</h3>
+        <h3>Gross Revenue ₹{revenueTotal}</h3>
+        <Link to="/home/insights"><button> View more Insights</button></Link>
       </div>
 
       <div className='add-exp-buttons' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><AddExpense onExpenseAdded={handleExpenseAdded} preferences={preferences} /></div>

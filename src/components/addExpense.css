@@ -2,25 +2,25 @@
     display: flex;
     /* margin-left: 10px; */
     align-items: center;
-    width: 1000px;
-    justify-content: left;
+    width: fit-content;
+    justify-content: center;
+    gap: 20px;
+    width: 95vw;
 }
 .add{
-    padding: 2%;
-    margin: 10px;
     color: rgb(24, 24, 24);
     font-weight: 600;
     display: flex;
     align-items: center;
     background: var(--accent-color) !important;
     border-radius: 10px;
-    width: 150px;
     border: solid black 0.5px !important;
     transition: 0.2s;
     cursor: pointer;
     text-wrap: nowrap;
     width: 180px;
     height: 20px;
+    padding: 20px;
 }
 .add:hover{
     transition: 0.2s;

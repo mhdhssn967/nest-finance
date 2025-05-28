@@ -42,8 +42,8 @@ const HomePage = () => {
 <div className='settingsDiv'><Settings setTriggerRefresh={setTriggerRefresh} triggerRefresh={triggerRefresh} /></div>}
 
  <div style={!settingsView?{filter:'blur(0px)'}:{filter:'blur(10px)'}}>
-    <div style={{marginLeft:'2%'}}>
-      <div style={{marginLeft:'2%'}}>
+    <div >
+      <div >
         <h1 className='comp-name' style={{ fontWeight:'400'}}>{preferences&&preferences.cName}</h1>
         {/* <h1 style={{fontSize:'25px', fontWeight:'100'}}>Track and optimize company expenses with ease.</h1> */}
       </div>

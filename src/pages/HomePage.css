@@ -10,11 +10,11 @@
 }
 .comp-name{
     font-size: 65px;
+    text-align: center;
 }
 @media (max-width: 600px) {
  .comp-name{
     font-size: 30px;
-    margin: 2%;
  }body{
     background-color: aliceblue;
  }
