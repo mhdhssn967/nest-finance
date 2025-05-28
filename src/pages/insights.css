@@ -1,6 +1,5 @@
 .act-btn{
     margin: 1%;
-    background-color: rgb(255, 255, 255);
     border: none;
     border-radius: 2px;
     color: black;
@@ -8,6 +7,7 @@
     display: flex;
     align-items: center;
     text-wrap: nowrap;
+    background: none;
     width: fit-content;
     cursor: pointer;
     padding: 0.4%;
@@ -34,7 +34,8 @@ body{
 
 .insight-navbar{
     display: flex;
-    margin:10px 50px;
+    width: 95vw;
+    margin:10px 5px;
 }
 .download-stmnt img{
     width: 30px;
