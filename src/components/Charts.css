@@ -1,3 +1,4 @@
+
 .input-picker{
     padding: 5px;
     margin: 1%;
@@ -65,7 +66,6 @@ label{
 @media (max-width:600px){
     .chart-container{
         width: 100vw !important;
-
     }
     .chart-main{
         margin-left: 0px;
@@ -78,4 +78,8 @@ label{
         margin-left: 0px;
         transform: scale(0.5);
     }
+    .total-value{
+        font-size: 50px;
+    }
+
 }

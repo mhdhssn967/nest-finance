@@ -140,7 +140,7 @@ const Charts = ({ setDate, date, insightData, displayExpenses, preferences }) =>
         {preferences && field && (
           <div className='chart-div'>
             <div className='chart-main'>
-              <h3 style={{ color: 'white', textAlign: 'center', marginBottom: '1rem' }}>
+              <h3 style={{ color: 'black', textAlign: 'center', marginBottom: '1rem' }}>
                 Chart by {field.charAt(0).toUpperCase() + field.slice(1)}
               </h3>
               <div className='donuts' style={{ position: 'relative' }}>
@@ -188,6 +188,7 @@ const Charts = ({ setDate, date, insightData, displayExpenses, preferences }) =>
                     zIndex: 0,
                     pointerEvents: 'none',
                   }}
+       
                 >
                   <h2 className='total-value'>₹{getFilteredTotal().toLocaleString('en-IN', {
                     minimumFractionDigits: 2,
@@ -200,7 +201,7 @@ const Charts = ({ setDate, date, insightData, displayExpenses, preferences }) =>
             {/* Line graph */}
             <div>
               <div className='line-graph' style={{ marginTop: '3rem' }}>
-                <h3 style={{ color: 'white', textAlign: 'center', marginBottom: '1rem' }}>
+                <h3 style={{ color: 'black', textAlign: 'center', marginBottom: '1rem' }}>
                   Daily Expenses Over Time
                 </h3>
                 <LineChart width={800} height={300} data={getLineChartData()}>
