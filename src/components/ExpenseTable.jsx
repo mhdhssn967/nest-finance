@@ -351,7 +351,7 @@ const ExpenseTable = ({preferences }) => {
 
       {/* Revenue Table */}
 
-   <h2 className='table-head0'>Revenue Overview</h2>
+   <h2 className='table-head'>Revenue Overview</h2>
       {(view == "revenue" || view == "all") && (
         <div className='tableDiv'>
        

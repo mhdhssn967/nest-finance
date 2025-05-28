@@ -27,7 +27,7 @@
   
   /* Form Fields */
   .modal-content .input-field,.input-field-select{
-    width: 240px;
+    width: 320px;
     background: white;
     color: black;
     /* border: none; */
@@ -82,13 +82,13 @@
   transform: scale(0.9);
 }
 .expense-form{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 2px;
   align-items: center;
 }
 .input-field-select{
-  width: 260px;
+  width: 340px;
 }
 @keyframes openModal{
   0%{

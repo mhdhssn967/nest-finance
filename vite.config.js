@@ -11,7 +11,7 @@ export default defineConfig({
       manifest: {
         name: 'Nest Finance',
         short_name: 'Nest Finance',
-        description: 'My Vite-powered React Progressive Web App!',
+        description: 'Finance Manager by Oqulix',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',

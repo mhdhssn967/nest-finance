@@ -2,3 +2,6 @@
     width: 300px;
     margin: 1%;
 }
+.revenue-form select{
+    width: 320px !important;
+}

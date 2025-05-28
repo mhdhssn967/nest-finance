@@ -67,4 +67,7 @@
   body{
     background-color: rgb(155, 206, 149);
   }
+  .login-container{
+    background-color: var(--accent-color);
+  }
 }
