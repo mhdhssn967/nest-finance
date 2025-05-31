@@ -17,11 +17,7 @@
     color: black;
     margin: 1%;
 }
-body{
-    width: 100vw;
-    overflow-x: hidden;
-    margin-left: 0px;
-}
+
 .download-stmnt{
     padding: 0.5%;
     font-weight: 600;
@@ -43,5 +39,9 @@ body{
 @media (max-width:600px) {
     .download-btn{
         transform: scale(0.8)
+    }
+    .chart-container{
+        max-width: 95vw;
+        overflow-x: hidden;
     }
 }

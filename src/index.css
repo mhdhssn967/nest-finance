@@ -5,11 +5,19 @@
   font-weight: 500;
   color: rgb(49, 49, 49);
 }
-body{
-  background-color: var(--background-color);
-  width: 100vw;
+body, html {
+  max-width: 100vw;
   overflow-x: hidden;
-  margin-left: 40px;
+}
+
+/* Also make sure root containers don’t allow overflow */
+#root {
+  overflow-x: hidden;
+}
+
+/* Optional: Avoid any unintentional full-width elements */
+* {
+  box-sizing: border-box;
 }
 button:hover{
   transform: scale(1.05);

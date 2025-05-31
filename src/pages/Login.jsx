@@ -4,7 +4,7 @@ import { auth } from "../firebaseConfig"; // Firebase Auth
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import logo from "../assets/OQ.png";
-import lg from "../assets/load.gif"; // Import loading GIF
+import lg from "../assets/load2.gif"; // Import loading GIF
 
 const Login = () => {
   const [email, setEmail] = useState(""); 
@@ -38,13 +38,13 @@ const Login = () => {
   if (loading) {
     return (
       <div style={{ 
-        height: "600vh", 
+        height: "100vh", 
         display: "flex", 
         justifyContent: "center", 
         alignItems: "center", 
         backgroundColor: "#fff" 
       }}>
-        <img src={lg} alt="Loading..." width="80px" />
+        <img src={lg} alt="Loading..." width="600px" />
       </div>
     );
   }

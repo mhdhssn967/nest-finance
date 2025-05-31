@@ -57,4 +57,10 @@
         padding: 2px !important;
         margin: 20px 5px !important;
     }
+    .field-filter{
+        max-width: 90vw;
+    }
+    .chart-data{
+        max-width: 90vw;
+    }
 }

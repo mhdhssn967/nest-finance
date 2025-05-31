@@ -73,7 +73,7 @@ const Insights = () => {
           <button title='Download Statement' className='download-stmnt' onClick={()=>setDownloadModal(!downloadModal)}> <img src={data} alt="" /> </button>
           }</div>
       </div>
-      <div>
+      <div style={{maxWidth:'90vw'}}>
       <h1 className='finance-report-h1' style={{ fontWeight:'500', textAlign:'center'}}>Financial Insights</h1>
       
       <Charts preferences={preferences} setDate={setDate} date={date} insightData={insightData} displayExpenses={displayExpenses} setDisplayExpenses={setDisplayExpenses}/>

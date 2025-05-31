@@ -247,7 +247,8 @@ const ExpenseTable = ({preferences }) => {
 
 
       {/* \Expense table */}
-<h2 className='table-head'>Expense Overview</h2>
+{(view == "all" || view == "expenses") &&
+<h2 className='table-head'>Expense Overview</h2>}
       {(view == "all" || view == "expenses") && (
         <div className='tableDiv'>
           <table>
@@ -357,7 +358,8 @@ const ExpenseTable = ({preferences }) => {
 
       {/* Revenue Table */}
 
-   <h2 className='table-head'>Revenue Overview</h2>
+   {(view == "revenue" || view == "all") &&
+   <h2 className='table-head'>Revenue Overview</h2>}
       {(view == "revenue" || view == "all") && (
         <div className='tableDiv'>
        
