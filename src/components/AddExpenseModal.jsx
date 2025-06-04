@@ -35,7 +35,7 @@ const AddExpenseModal = ({ isOpen, onClose, onExpenseAdded, preferences = {} }) 
     const requiredKeys = Object.keys(preferences?.fields || {});
 
     const isFormIncomplete =
-      !date || !amount || requiredKeys.some((key) => !expenseDetails[key]);
+      !date || !amount ;
 
     if (isFormIncomplete) {
       alert("Fill the form completely");
