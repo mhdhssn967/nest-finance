@@ -47,7 +47,7 @@ const Filters = ({
       </div>
 
       <div className='sort-by-div'>
-        <label htmlFor="sort-by">Sort By </label>
+        <label htmlFor="sort-by"><i className="fa-solid fa-sort"></i> </label>
         <select
           id="sort-by"
           onChange={(e) => setSortBy(e.target.value)}

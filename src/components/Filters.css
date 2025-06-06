@@ -1,66 +1,77 @@
 .filter-div{
-    margin: 2%;
+    display: flex;
+    gap: 50px;
+    align-items: end;
+    margin: 15px;
+    justify-content: space-between;
+}
+.filter-select-div{
+    display: flex;
+    gap: 15px;
+}
+.filter-selects{
+    gap: 5px;
+    display: flex;
+    align-items: center;
+}
+.filter-selects select{
+    border: solid 0.5px rgb(185, 184, 184);
+    padding: 4px;
+    font-weight: 400;
+    border-radius: 15px;
 }
 .filter-div label{
-    margin-left: 1%;
+    font-weight: 300;
 }
-.filter-div input{
-    background-color: white;
-    border: solid black 0.5px;
-    width: 300px;
-}
-.filter-div input,.filter-div select{
-    padding: 0.3%;    border-radius: 10px;
+.search-filter input{
+    width: 460px;
+    border: solid 0.5px rgb(185, 184, 184);
+    padding: 4px;
+    font-weight: 400;
+    border-radius: 0px 20px 20px 0px;
 }
 .search-filter{
     display: flex;
     align-items: center;
-    margin: 10px;
-    justify-content: center;
 }
 .search-filter i{
-    background-color: var(--primary-color);
-    padding: 7px;
+    background-color: rgb(122, 122, 122);
     color: white;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 20px 0px 0px 20px;
+    padding: 6px;
 }
-#searchFilter{
-    border-radius: 0px 10px 10px 0px;
-}
-.filter-select-div{
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+.sort-by-div select{
+    border: solid 0.5px rgb(185, 184, 184);
+    padding: 4px;
+    font-weight: 400;
+    border-radius: 15px;
 }
 .sort-by-div{
     display: flex;
-    justify-content: center;
-    flex-direction: column;
     align-items: center;
-    margin: 10px;
-}
-.filter-selects{
-    display: flex;
-    flex-direction: column;
+    gap: 5px;
 }
 @media (max-width:600px) {
-    #searchFilter{
-        width: 60%;
-        border-radius:0px 10px 10px 0px;
-        padding: 4px;
+    .search-filter input{
+        width: 80vw;
     }
-    select{
-        width: 100px;
-        border-radius: 4px !important;
+    .filter-div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
     }
-    .input-picker{
-        padding: 2px !important;
-        margin: 20px 5px !important;
+    .filter-select-div{
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
     }
-    .field-filter{
-        max-width: 90vw;
+    .filter-selects select{
+        border-radius: 10px;
+        padding: 2px;
     }
-    .chart-data{
-        max-width: 90vw;
+    .sort-by-div select{
+        padding: 2px;
+        border-radius: 5px;
     }
 }

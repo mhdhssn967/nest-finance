@@ -43,7 +43,8 @@ const AddExpenseModal = ({ isOpen, onClose, onExpenseAdded, preferences = {} }) 
     }
     const financeId='financialData'
     try {
-const expenseRef = collection(db, "userData", userId, "finances", financeId, "expenses");      await addDoc(expenseRef, {
+const expenseRef = collection(db, "userData", userId, "finances", financeId, "expenses");   
+   await addDoc(expenseRef, {
         userID: user.uid,
         ...expenseDetails,
         createdAt: new Date(),

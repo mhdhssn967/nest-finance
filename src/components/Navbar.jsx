@@ -13,11 +13,11 @@ const Navbar = ({settingsView,setSettingsView}) => {
      <div className='navmain'>
         <div className='logo'>
           <img src={OQLogo} alt="Oqulix Logo" />
-          <h2 style={{color:'white',margin:'10px'}}>Oqulix Finance</h2>
+          <h2 style={{margin:'10px'}}>Oqulix Finance</h2>
         </div>
         <div className='nav-actions'>
-          <div className='settingButton'><img onClick={()=>settingsView?setSettingsView(false):setSettingsView(true)} src={settingsView?close:setting} alt="" /></div>
-          <button style={{color:'white'}} onClick={logoutUser}>Logout</button>
+          <button className='settingButton'><img onClick={()=>settingsView?setSettingsView(false):setSettingsView(true)} src={settingsView?close:setting} alt="" /></button>
+          <button  onClick={logoutUser}>Logout</button>
         </div>
         </div>   
     </>

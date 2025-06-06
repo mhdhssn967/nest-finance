@@ -11,7 +11,7 @@ import { auth } from '../firebaseConfig';
 import { Link } from 'react-router-dom';
 import DownloadStatement from '../components/DownloadStatement';
 import data from '../assets/data.webp'
-
+import Navigator from '../components/Navigator';
 
 
 const Insights = () => {  
@@ -61,13 +61,38 @@ const Insights = () => {
         return () => unsubscribe(); // Cleanup on unmount
       }, []);
 
+      const getLineChartData = () => {
+    if (!displayExpenses || displayExpenses.length === 0) return [];
+
+    const filtered = filteredExpenses;
+
+    const dateToAmountMap = {};
+
+    filtered.forEach(exp => {
+      const dateKey = new Date(exp.date).toISOString().split('T')[0]; // 'YYYY-MM-DD'
+      if (!dateToAmountMap[dateKey]) dateToAmountMap[dateKey] = 0;
+      dateToAmountMap[dateKey] += Number(exp.amount); // ensure it's a number
+    });
+
+    const chartData = Object.entries(dateToAmountMap)
+      .sort((a, b) => new Date(a[0]) - new Date(b[0]))
+      .map(([date, amount]) => ({
+        date,
+        amount: Number(amount),
+      }));
+
+
+    return chartData;
+  };
+
   return (
     <>
       <div><Navbar/></div>
+      <Navigator preferences={preferences}/>
+
       {downloadModal&&
         <div className='download-div'><DownloadStatement setDownloadModal={setDownloadModal} preferences={preferences} allExpenses={allExpenses}/></div>}
       <div className='insight-navbar'>
-        <Link to="/"><button className='act-btn'><i className="fa-solid fa-arrow-left"></i>Back to Home</button></Link>
         <div style={{display:'flex',justifyContent:'right',width:'90%'}}>{
           !downloadModal&&
           <button title='Download Statement' className='download-stmnt' onClick={()=>setDownloadModal(!downloadModal)}> <img src={data} alt="" /> </button>

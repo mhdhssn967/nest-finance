@@ -1,5 +1,5 @@
 .settingsPage{
-    background-color: var(--background-color);
+    background-color: white;
     padding: 2% ;
     animation: settingsOpen .5s;
     box-shadow: 0px 0px 2px black;
@@ -35,8 +35,8 @@
 .fieldItems li{
     list-style: none;
     font-size: 15px;
-    color: black;
-    background-color: var(--accent-color);
+    color: rgb(223, 219, 219);
+    background-color: black;
     border-radius: 3px;
     padding: 5px;
 }
@@ -98,7 +98,7 @@
     border: solid rgb(43, 43, 43) 0.5px;
 }
 .field-btn-save{
-    background-color: var(--primary-color);
+    background-color: black;
     border: none;
     color: white;
 }

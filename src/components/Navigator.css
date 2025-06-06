@@ -1,0 +1,26 @@
+.navigation{
+    width: 100vw;
+    padding: 20px;
+    border-bottom: solid rgb(194, 193, 193) 0.5px;
+    gap: 10px; 
+    justify-content:space-between;
+    align-items: center;
+}
+.navigation-buttons{
+    display: flex;
+    gap: 10px;
+}
+.navigation h1{
+    font-size: 25px;
+    text-align: center;
+    margin-top: -35px;
+}
+@media (max-width:600px) {
+    .navigation h1{
+        font-size: 18px;
+        margin-top: 5px;
+        text-align: left;
+    }.navigation{
+        padding: 10px;
+    }
+}

@@ -6,13 +6,14 @@ import Settings from '../components/Settings'
 import { fetchPreferences } from '../services/updatePreferences'
 import { auth } from '../firebaseConfig'
 import { onAuthStateChanged } from 'firebase/auth'
-
+import Navigator from '../components/Navigator'
 
 const HomePage = () => {
     const [settingsView, setSettingsView] = useState(false)
     const [userId, setUserId] = useState(null);
     const [preferences, setPreferences]=useState(null)
     const [triggerRefresh, setTriggerRefresh]=useState(false)
+
     
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -40,11 +41,10 @@ const HomePage = () => {
 
 {settingsView==1&&
 <div className='settingsDiv'><Settings setTriggerRefresh={setTriggerRefresh} triggerRefresh={triggerRefresh} /></div>}
-
+<Navigator preferences={preferences}/>
  <div style={!settingsView?{filter:'blur(0px)'}:{filter:'blur(10px)'}}>
     <div >
       <div >
-        <h1 className='comp-name' style={{ fontWeight:'400'}}>{preferences?preferences.cName:'Company Name'}</h1>
         {/* <h1 style={{fontSize:'25px', fontWeight:'100'}}>Track and optimize company expenses with ease.</h1> */}
       </div>
     </div>

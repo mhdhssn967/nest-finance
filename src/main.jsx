@@ -11,13 +11,3 @@ createRoot(document.getElementById('root')).render(
     </StrictMode>
   </BrowserRouter>
 )
-import { registerSW } from 'virtual:pwa-register'
-
-const updateSW = registerSW({
-  onNeedRefresh() {
-    console.log('🔄 New content available. Refresh to update.')
-  },
-  onOfflineReady() {
-    console.log('✅ App ready to work offline.')
-  }
-})
