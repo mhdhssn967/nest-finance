@@ -66,15 +66,23 @@ const financeId='financialData'
         <form className="revenue-form">
           <input onChange={(e)=>setRevenueDetails({...revenueDetails,date:e.target.value})} type="date" className="input-field" />
 
-          <select onChange={(e)=>setRevenueDetails({...revenueDetails,service:e.target.value})} className="input-field">
-          <option default selected disabled>Select Service</option>
-              {preferences &&
-              preferences.fields.Service.map((options) => (
-                            <option key={options} value={options}>
-                              {options}
-                            </option>
-                          ))}
-          </select>
+          <select
+  onChange={(e) =>
+    setRevenueDetails({ ...revenueDetails, service: e.target.value })
+  }
+  className="input-field"
+>
+  <option value="" disabled selected>Select Service</option>
+  
+  {preferences && (
+    (preferences.fields?.Service || preferences.fields?.service || []).map((option) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    ))
+  )}
+</select>
+
 
 
           <input onChange={(e)=>setRevenueDetails({...revenueDetails,amount:e.target.value})} type="number" placeholder="Amount" className="input-field" />
