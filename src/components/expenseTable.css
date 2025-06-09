@@ -194,6 +194,7 @@ option{
     background-color: white;
     width: 150px;
     height: 25px;
+    color: rgb(31, 31, 31);
     border: solid 0.5px rgb(175, 171, 171);
 }
 .top-div{

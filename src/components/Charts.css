@@ -60,6 +60,9 @@ label{
     width: 100vw;
     overflow-x: hidden;
 }
+.date-picker-div input{
+    color: rgb(34, 34, 34);
+}
 @media (max-width:600px){
     .chart-container{
         width: 100vw !important;

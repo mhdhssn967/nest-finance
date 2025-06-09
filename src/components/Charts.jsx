@@ -81,7 +81,7 @@ const Charts = ({ setDate, date, insightData, displayExpenses, preferences }) =>
         <input value={date.from} className='input-picker' type="date" id='from' onChange={(e) => setDate({ ...date, from: e.target.value })} />
         <label htmlFor="to">To</label>
         <input value={date.to} className='input-picker' type="date" id='to' onChange={(e) => setDate({ ...date, to: e.target.value })} />
-        <button style={{ backgroundColor: 'var(--primary-color)',color:'white',padding:'7px', border: 'solid white 0.5px' }} onClick={() => setDate({ from: '', to: '' })}>Reset</button>
+        <button style={{ backgroundColor: 'black',color:'white',padding:'5px', border: 'none', borderRadius:'10px' }} onClick={() => setDate({ from: '', to: '' })}>Reset</button>
       </div>
 
       <div className='chart-data'>
