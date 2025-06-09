@@ -11,9 +11,6 @@ import {
   where,
 } from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
-import edit from "../assets/edit.png";
-import deleteImg from "../assets/delete.png";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { deleteData, filterExpenses, sortExpenses } from "../services/services";
 import Filters from "./Filters";
@@ -257,22 +254,22 @@ const ExpenseTable = ({ preferences }) => {
   useEffect(() => {
     if (view == "all") {
       const combinedDataRef = [
-        ...displayExpenses.map((item) => ({ ...item, type: "Expense" })),
-        ...displayRevenue.map((item) => ({ ...item, type: "Revenue" })),
+        ...displayExpenses.map((item) => ({ ...item, typeOfTransaction: "Expense" })),
+        ...displayRevenue.map((item) => ({ ...item, typeOfTransaction: "Revenue" })),
       ];
       combinedDataRef.sort((a, b) => new Date(b.date) - new Date(a.date)); // latest on top
       setCombinedData(combinedDataRef);
     }
     if (view == "expenses") {
       const combinedDataRef = [
-        ...displayExpenses.map((item) => ({ ...item, type: "Expense" })),
+        ...displayExpenses.map((item) => ({ ...item, typeOfTransaction: "Expense" })),
       ];
       combinedDataRef.sort((a, b) => new Date(b.date) - new Date(a.date)); // latest on top
       setCombinedData(combinedDataRef);
     }
     if (view == "revenue") {
       const combinedDataRef = [
-        ...displayRevenue.map((item) => ({ ...item, type: "Revenue" })),
+        ...displayRevenue.map((item) => ({ ...item, typeOfTransaction: "Revenue" })),
       ];
       combinedDataRef.sort((a, b) => new Date(b.date) - new Date(a.date)); // latest on top
       setCombinedData(combinedDataRef);
@@ -310,6 +307,7 @@ const ExpenseTable = ({ preferences }) => {
 
     return chartData;
   };
+  
 
   return (
     <>
@@ -356,7 +354,7 @@ const ExpenseTable = ({ preferences }) => {
             <div>
               <div className="inside-head">
                 <img src={exp} alt="" />
-                <h3>Total Expenses</h3>
+                <h3>Total Expense</h3>
               </div>
               <div className="outside-head">
                 <h2>{totalExpenses} INR</h2>
@@ -410,7 +408,7 @@ const ExpenseTable = ({ preferences }) => {
               <YAxis domain={[0, 10000]} tick={{ fill: "black" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "var(--accent-color)",
+                  backgroundColor: "white",
                   color: "#fff",
                 }}
               />
@@ -498,7 +496,7 @@ const ExpenseTable = ({ preferences }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th>Type</th>
+              <th>Transaction</th>
               <th>Date</th>
               {/* Dynamically render preference or service field */}
               {preferences &&
@@ -515,11 +513,11 @@ const ExpenseTable = ({ preferences }) => {
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>
-                  {item.type == "Expense"}
+                  {item.typeOfTransaction== "Expense"}
 
                   <img
                     width={"25px"}
-                    src={item.type == "Expense" ? send : recieve}
+                    src={item.typeOfTransaction == "Expense" ? send : recieve}
                     alt=""
                   />
                 </td>
@@ -540,7 +538,7 @@ const ExpenseTable = ({ preferences }) => {
                       />
                     </td>
 
-                    {item.type === "Expense" ? (
+                    {item.typeOfTransaction ? (
                       Object.keys(preferences.fields).map((key) => (
                         <td key={key}>
                           <select
@@ -618,7 +616,7 @@ const ExpenseTable = ({ preferences }) => {
                         className="edit-btn"
                         onClick={() =>
                           saveEditedData(
-                            item.type === "Expense" ? "expenses" : "revenue",
+                            item.typeOfTransaction ? "expenses" : "revenue",
                             item.id
                           )
                         }
@@ -644,7 +642,7 @@ const ExpenseTable = ({ preferences }) => {
                   <>
                     <td>{item.date || "-"}</td>
 
-                    {item.type === "Expense" ? (
+                    {item.typeOfTransaction ? (
                       Object.keys(preferences.fields).map((key) => (
                         <td key={key}>{item[key] || "-"}</td>
                       ))
@@ -656,8 +654,7 @@ const ExpenseTable = ({ preferences }) => {
 
                     <td
                       style={
-                        item.type == "Expense"
-                          ? { color: "red", fontWeight: "800" }
+                        item.typeOfTransaction                          ? { color: "red", fontWeight: "800" }
                           : { color: "green", fontWeight: "800" }
                       }
                     >
@@ -677,7 +674,7 @@ const ExpenseTable = ({ preferences }) => {
                         className="fa-solid fa-trash"
                         onClick={() =>
                           handleDeleteData(
-                            item.type === "Expense" ? "expenses" : "revenue",
+                            item.typeOfTransaction ? "expenses" : "revenue",
                             item.id
                           )
                         }

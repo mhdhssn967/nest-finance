@@ -74,4 +74,8 @@
         padding: 2px;
         border-radius: 5px;
     }
+    .filter-selects{
+        display: grid;
+    grid-template-columns: 100px 100px;
+    }
 }

@@ -100,7 +100,7 @@ const Charts = ({ setDate, date, insightData, displayExpenses, preferences }) =>
                   padding: '8px 12px',
                   margin: '5px',
                   borderRadius: '8px',
-                  backgroundColor: field === fieldKey ? 'var(--accent-color)' : 'white',
+                  backgroundColor: field === fieldKey ? 'rgb(202, 198, 198)' : 'white',
                   color: field === fieldKey ? '#fff' : '#ccc',
                   border: '1px solid #444',
                   transition: 'all 0.2s ease'
@@ -162,7 +162,7 @@ const Charts = ({ setDate, date, insightData, displayExpenses, preferences }) =>
                   <Tooltip
                     contentStyle={{
                       color: '#ffffff',
-                      backgroundColor: 'var(--accent-color)',
+                      backgroundColor: 'white',
                       letterSpacing: '1px'
                     }}
                   />
@@ -208,7 +208,7 @@ const Charts = ({ setDate, date, insightData, displayExpenses, preferences }) =>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" tick={{ fill: 'black', fontSize: 12 }} />
                   <YAxis domain={[0, 10000]} tick={{ fill: 'black' }} />
-                  <Tooltip contentStyle={{ backgroundColor: 'var(--accent-color)', color: '#fff' }} />
+                  <Tooltip contentStyle={{ backgroundColor: 'white', color: '#fff' }} />
                   <Line type="monotone" dataKey="amount" stroke="#36A2EB" strokeWidth={2} dot={{ r: 1 }} />
                 </LineChart>
               </div>

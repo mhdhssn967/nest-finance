@@ -267,6 +267,9 @@ option{
     display: flex;
     justify-content: end;
 }
+.outside-head h2{
+    font-weight: 800;
+}
 .expense-progress i{
     transform: rotate(90deg);
 }
@@ -338,7 +341,7 @@ option{
 .tableDiv table
  {
     border: none ;
-    width: 200%;
+    width: 100%;
     overflow-x: scroll !important;
     margin: 0px 10px;
  }
@@ -400,5 +403,8 @@ option{
 }
 .tableDiv th{
     padding: 8px;
+}
+.tableDiv table tbody tr td{
+    text-wrap: nowrap;
 }
 }
