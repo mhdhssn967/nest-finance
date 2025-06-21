@@ -69,8 +69,22 @@ const expenseRef = collection(db, "userData", userId, "finances", financeId, "ex
     }
   };
 
+  //   const handleUpload = async (e) => {
+  //   const file = e.target.files[0];
+  //   const text = await file.text();
+  //   const data = JSON.parse(text);
+  //   const financeId='financialData'
+  //   const ref = collection(db, "userData", userId, "finances", financeId, "expenses");
+
+  //   for (const item of data) await addDoc(ref, item);
+  //   alert("Uploaded!");
+  // };
+
+
   return (
     <div className="modal-overlay">
+          {/* <input type="file" accept=".json" onChange={handleUpload} /> */}
+
       <div className="modal-content">
         <h2>Add New Expense</h2>
         <form className="expense-form">

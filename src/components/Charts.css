@@ -29,6 +29,7 @@ label{
 .donuts{
     border-radius: 100px;
 }
+
 .total-value{
     font-weight: 600;
     letter-spacing: 1px;
@@ -62,6 +63,17 @@ label{
 }
 .date-picker-div input{
     color: rgb(34, 34, 34);
+}
+.rst-btn{
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.date-picker-div{
+    display: flex;
+    align-items: center;
 }
 @media (max-width:600px){
     .chart-container{

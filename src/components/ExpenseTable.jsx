@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import "./expenseTable.css";
 import AddExpense from "./AddExpense";
 import {
@@ -35,7 +37,7 @@ const ExpenseTable = ({ preferences }) => {
   const [view, setView] = useState("all");
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [revenueModalOpen, setRevenueModalOpen] = useState(false);
-  const [filteredFinanceData,setFilteredFinanceData]=useState([])
+  const [filteredFinanceData, setFilteredFinanceData] = useState([]);
   const [revenue, setRevenue] = useState([]);
   const [combinedData, setCombinedData] = useState([]);
   const [editRowId, setEditRowId] = useState(null); // stores the ID of the row being edited
@@ -46,6 +48,50 @@ const ExpenseTable = ({ preferences }) => {
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState("date");
+
+
+const downloadFilteredExcel = () => {
+  // Define headers for the Excel sheet
+  const headers = ["#", "Date", "Amount", "Remarks","Category"];
+
+  // Build the data rows using your source (combinedData)
+  const data = combinedData.map((item, index) => [
+    index + 1,
+    item.date || "-",
+    item.amount || 0,
+    item.remarks || "-",
+    item.category || "-"
+  ]);
+
+  // Combine headers and data
+  const worksheetData = [headers, ...data];
+
+  // Create worksheet and workbook
+  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
+
+  // Optional: Set column widths
+  worksheet["!cols"] = [
+    { wch: 5 },    // #
+    { wch: 15 },   // Date
+    { wch: 10 },   // Amount
+    { wch: 25 },   // Remarks
+  ];
+
+  // Write and download
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array",
+  });
+
+  const blob = new Blob([excelBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+
+  saveAs(blob, "Filtered_Transactions.xlsx");
+};
+
 
   useEffect(() => {
     const currentDate = new Date();
@@ -254,36 +300,47 @@ const ExpenseTable = ({ preferences }) => {
   useEffect(() => {
     if (view == "all") {
       const combinedDataRef = [
-        ...displayExpenses.map((item) => ({ ...item, typeOfTransaction: "Expense" })),
-        ...displayRevenue.map((item) => ({ ...item, typeOfTransaction: "Revenue" })),
+        ...displayExpenses.map((item) => ({
+          ...item,
+          typeOfTransaction: "Expense",
+        })),
+        ...displayRevenue.map((item) => ({
+          ...item,
+          typeOfTransaction: "Revenue",
+        })),
       ];
       combinedDataRef.sort((a, b) => new Date(b.date) - new Date(a.date)); // latest on top
       setCombinedData(combinedDataRef);
     }
     if (view == "expenses") {
       const combinedDataRef = [
-        ...displayExpenses.map((item) => ({ ...item, typeOfTransaction: "Expense" })),
+        ...displayExpenses.map((item) => ({
+          ...item,
+          typeOfTransaction: "Expense",
+        })),
       ];
       combinedDataRef.sort((a, b) => new Date(b.date) - new Date(a.date)); // latest on top
       setCombinedData(combinedDataRef);
     }
     if (view == "revenue") {
       const combinedDataRef = [
-        ...displayRevenue.map((item) => ({ ...item, typeOfTransaction: "Revenue" })),
+        ...displayRevenue.map((item) => ({
+          ...item,
+          typeOfTransaction: "Revenue",
+        })),
       ];
       combinedDataRef.sort((a, b) => new Date(b.date) - new Date(a.date)); // latest on top
       setCombinedData(combinedDataRef);
     }
   }, [displayExpenses, displayRevenue, view]);
 
-  
-  useEffect(()=>{
-    if(view=='all'||view=='expenses'){
-    setFilteredFinanceData(displayExpenses);
-    }else{
+  useEffect(() => {
+    if (view == "all" || view == "expenses") {
+      setFilteredFinanceData(displayExpenses);
+    } else {
       setFilteredFinanceData(displayRevenue);
     }
-  },[displayExpenses,displayRevenue,view])
+  }, [displayExpenses, displayRevenue, view]);
 
   const getLineChartData = () => {
     if (!displayExpenses || displayExpenses.length === 0) return [];
@@ -307,7 +364,9 @@ const ExpenseTable = ({ preferences }) => {
 
     return chartData;
   };
-  
+
+
+
 
   return (
     <>
@@ -342,6 +401,7 @@ const ExpenseTable = ({ preferences }) => {
             Reset
           </button>
         </div>
+        <button className="excel-btn" onClick={downloadFilteredExcel}>Download Excel</button>
       </div>
 
       <div className="top-container">
@@ -400,7 +460,7 @@ const ExpenseTable = ({ preferences }) => {
                 marginBottom: "1rem",
               }}
             >
-              <p>Daily {view=='revenue'?'Revenue':'Expense'} over time</p>
+              <p>Daily {view == "revenue" ? "Revenue" : "Expense"} over time</p>
             </h3>
             <BarChart width={800} height={300} data={getLineChartData()}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -456,43 +516,42 @@ const ExpenseTable = ({ preferences }) => {
       {/* ----------------------- */}
       <div className="table-head-container">
         <div className="table-head">
-            <h1 className="finance-report-h1" style={{ textAlign: "left" }}>
-              Your Financial Report
-            </h1>
-            <div className="table-view">
-              <button
-                className={`view-button ${view === "all" ? "active" : ""}`}
-                onClick={() => setView("all")}
-              >
-                All
-              </button>
-              <button
-                className={`view-button ${view === "expenses" ? "active" : ""}`}
-                onClick={() => setView("expenses")}
-              >
-                Expenses
-              </button>
-              <button
-                className={`view-button ${view === "revenue" ? "active" : ""}`}
-                onClick={() => setView("revenue")}
-              >
-                Revenue
-              </button>
-            </div>
+          <h1 className="finance-report-h1" style={{ textAlign: "left" }}>
+            Your Financial Report
+          </h1>
+          <div className="table-view">
+            <button
+              className={`view-button ${view === "all" ? "active" : ""}`}
+              onClick={() => setView("all")}
+            >
+              All
+            </button>
+            <button
+              className={`view-button ${view === "expenses" ? "active" : ""}`}
+              onClick={() => setView("expenses")}
+            >
+              Expenses
+            </button>
+            <button
+              className={`view-button ${view === "revenue" ? "active" : ""}`}
+              onClick={() => setView("revenue")}
+            >
+              Revenue
+            </button>
           </div>
-          <div className="filter-container">
-            <Filters
-              setSortBy={setSortBy}
-              filterValues={filterValues}
-              setFilterValues={setFilterValues}
-              setSearchText={setSearchText}
-              preferences={preferences}
-            />
-          </div>
+        </div>
+        <div className="filter-container">
+          <Filters
+            setSortBy={setSortBy}
+            filterValues={filterValues}
+            setFilterValues={setFilterValues}
+            setSearchText={setSearchText}
+            preferences={preferences}
+          />
+        </div>
       </div>
       <div className="tableDiv">
-        
-        <table>
+        <table className="transaction-table">
           <thead>
             <tr>
               <th>#</th>
@@ -513,7 +572,7 @@ const ExpenseTable = ({ preferences }) => {
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>
-                  {item.typeOfTransaction== "Expense"}
+                  {item.typeOfTransaction == "Expense"}
 
                   <img
                     width={"25px"}
@@ -654,7 +713,8 @@ const ExpenseTable = ({ preferences }) => {
 
                     <td
                       style={
-                        item.typeOfTransaction                          ? { color: "red", fontWeight: "800" }
+                        item.typeOfTransaction
+                          ? { color: "red", fontWeight: "800" }
                           : { color: "green", fontWeight: "800" }
                       }
                     >

@@ -323,6 +323,14 @@ option{
     background-color: rgb(105, 105, 105);
     color: white;
 }
+.excel-btn{
+    background-color: rgb(19, 161, 114);
+    cursor: pointer;
+    border-radius: 20px;
+    border: none;
+    padding: 5px;
+    color: white;
+}
 .top-container{
     display: flex;
     align-items: center;
