@@ -89,7 +89,7 @@ const downloadFilteredExcel = () => {
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
 
-  saveAs(blob, "Filtered_Transactions.xlsx");
+  saveAs(blob, "Transactions.xlsx");
 };
 
 
