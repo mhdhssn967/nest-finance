@@ -28,9 +28,11 @@
 @media (max-width:600px) {
     .navigation h1{
         font-size: 18px;
-        margin-top: 5px;
         text-align: left;
     }.navigation{
         padding: 10px;
-    }
+    }.company-logo{
+    width: 30px;
+    border-radius: 50%;
+}
 }
