@@ -1,5 +1,5 @@
 import { auth, db } from "../firebaseConfig";; // adjust the path as needed
-import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, doc, getDoc } from 'firebase/firestore';
 
 export const fetchUserExpenses = async () => {
   return new Promise((resolve, reject) => {
@@ -52,4 +52,19 @@ export const fetchUserRevenue = async () => {
       }
     });
   });
+};
+
+
+
+
+export const fetchCompanyDetails = async (userId) => {
+  const docRef = doc(db, "userData", userId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data(); // ✅ returns the company/admin info
+  } else {
+    console.log("No such document!");
+    return null;
+  }
 };

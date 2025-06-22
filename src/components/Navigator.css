@@ -11,9 +11,19 @@
     gap: 10px;
 }
 .navigation h1{
-    font-size: 25px;
+    font-size: 35px;
     text-align: center;
-    margin-top: -35px;
+    /* margin-top: -35px; */
+}
+.comp-div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 20px;
+}
+.company-logo{
+    width: 65px;
+    border-radius: 50%;
 }
 @media (max-width:600px) {
     .navigation h1{

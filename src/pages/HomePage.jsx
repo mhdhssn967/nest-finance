@@ -7,12 +7,15 @@ import { fetchPreferences } from '../services/updatePreferences'
 import { auth } from '../firebaseConfig'
 import { onAuthStateChanged } from 'firebase/auth'
 import Navigator from '../components/Navigator'
+import { fetchCompanyDetails } from '../services/fetchData'
 
 const HomePage = () => {
     const [settingsView, setSettingsView] = useState(false)
     const [userId, setUserId] = useState(null);
     const [preferences, setPreferences]=useState(null)
     const [triggerRefresh, setTriggerRefresh]=useState(false)
+    const [companyDetails,setCompanyDetails]=useState(null)
+    
 
     
     useEffect(() => {
@@ -33,7 +36,22 @@ const HomePage = () => {
       return () => unsubscribe(); // Cleanup on unmount
     }, [triggerRefresh]);
 
-    
+    useEffect(() => {
+  const getCompanyDetails = async () => {
+    try {
+      const companyDetailsRef = await fetchCompanyDetails(userId);
+      setCompanyDetails(companyDetailsRef);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (userId) {
+    getCompanyDetails();
+  }
+}, [triggerRefresh,userId]);
+
+  
     
   return (
     <>
@@ -41,7 +59,7 @@ const HomePage = () => {
 
 {settingsView==1&&
 <div className='settingsDiv'><Settings setTriggerRefresh={setTriggerRefresh} triggerRefresh={triggerRefresh} /></div>}
-<Navigator preferences={preferences}/>
+<Navigator companyDetails={companyDetails} preferences={preferences}/>
  <div style={!settingsView?{filter:'blur(0px)'}:{filter:'blur(10px)'}}>
     <div >
       <div >

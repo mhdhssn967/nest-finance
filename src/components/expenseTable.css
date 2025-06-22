@@ -28,11 +28,8 @@ option{
     /* background-color: rgb(85, 83, 83); */
     border: none;
 }
-.tableDiv thead tr{
-    position: sticky;
-    top: 0px;
-    background: none !important;
-}
+
+
 .tableDiv thead tr th{
         background-color: rgb(230, 227, 227);
 }
