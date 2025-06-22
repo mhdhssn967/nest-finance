@@ -416,4 +416,10 @@ option{
 .tableDiv table tbody tr td{
     text-wrap: nowrap;
 }
+.tableDiv tbody th:first-child, .tableDiv tbody td:first-child {
+  position: sticky;
+  left: 0;
+  background: #fff;
+}
+
 }
