@@ -368,6 +368,7 @@ option{
     height: 8px;
     width: 100%;
     animation: loaderbar 2s;
+    border-radius: 50px;
 }
 @keyframes loaderbar{
     0%{
