@@ -25,6 +25,7 @@ import AddRevenueModal from "./AddRevenueModal";
 import send from "../assets/send.png";
 import recieve from "../assets/recieve.png";
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
+import load3 from '../assets/load3.gif'
 
 const ExpenseTable = ({ preferences }) => {
   const [expenses, setExpenses] = useState([]);
@@ -370,590 +371,378 @@ const downloadFilteredExcel = () => {
 
   return (
     <>
-      <div className="top-div">
-        <h2>Financial Details</h2>
-        <div className="date-picker-div">
-          <div className="input-wrapper">
-            <label htmlFor="from">From</label>
-            <input
-              value={date.from}
-              className="input-picker"
-              type="date"
-              id="from"
-              onChange={(e) => setDate({ ...date, from: e.target.value })}
-            />
-          </div>
-
-          <div className="input-wrapper">
-            <label htmlFor="to">To</label>
-            <input
-              value={date.to}
-              className="input-picker"
-              type="date"
-              id="to"
-              onChange={(e) => setDate({ ...date, to: e.target.value })}
-            />
-          </div>
-          <button
-            className="reset-btn"
-            onClick={() => setDate({ from: "", to: "" })}
-          >
-            Reset
-          </button>
-        </div>
-        <button className="excel-btn" onClick={downloadFilteredExcel}>Download Excel</button>
-      </div>
-
-      <div className="top-container">
-        <div className="report-card">
-          <div className="report-head">
-            <img src={tra} alt="" />
-            <h2>Financial Snapshot</h2>
-          </div>
-          <div className="reports">
-            <div>
-              <div className="inside-head">
-                <img src={exp} alt="" />
-                <h3>Total Expense</h3>
-              </div>
-              <div className="outside-head">
-                <h2>{totalExpenses} INR</h2>
-                <h5>{monthlyTotalExpense} INR this month</h5>
-              </div>
+      {displayExpenses.length>0?<>
+        <div className="top-div">
+          <h2>Financial Details</h2>
+          <div className="date-picker-div">
+            <div className="input-wrapper">
+              <label htmlFor="from">From</label>
+              <input
+                value={date.from}
+                className="input-picker"
+                type="date"
+                id="from"
+                onChange={(e) => setDate({ ...date, from: e.target.value })}
+              />
             </div>
-            <div>
-              <div className="inside-head">
-                <img src={rev} alt="" />
-                <h3>Total Revenue</h3>
-              </div>
-              <div className="outside-head">
-                <h2>{totalRevenue} INR</h2>
-                <h5>{monthlyTotalRevenue} INR this month</h5>
-              </div>
+  
+            <div className="input-wrapper">
+              <label htmlFor="to">To</label>
+              <input
+                value={date.to}
+                className="input-picker"
+                type="date"
+                id="to"
+                onChange={(e) => setDate({ ...date, to: e.target.value })}
+              />
             </div>
-          </div>
-          <AddExpense
-            setExpenseModalOpen={setExpenseModalOpen}
-            setRevenueModalOpen={setRevenueModalOpen}
-            onExpenseAdded={handleExpenseAdded}
-            preferences={preferences}
-          />
-          <div className="expense-bar">
-            <div
-              className="expense-progress"
-              style={{ width: `${Number(progress)}%` }}
+            <button
+              className="reset-btn"
+              onClick={() => setDate({ from: "", to: "" })}
             >
+              Reset
+            </button>
+          </div>
+          <button className="excel-btn" onClick={downloadFilteredExcel}>Download Excel</button>
+        </div>
+  
+        <div className="top-container">
+          <div className="report-card">
+            <div className="report-head">
+              <img src={tra} alt="" />
+              <h2>Financial Snapshot</h2>
+            </div>
+            <div className="reports">
               <div>
-                <p>{monthlyTotalExpense} INR</p>
-                <i className="fa-solid fa-play"></i>
+                <div className="inside-head">
+                  <img src={exp} alt="" />
+                  <h3>Total Expense</h3>
+                </div>
+                <div className="outside-head">
+                  <h2>{totalExpenses} INR</h2>
+                  <h5>{monthlyTotalExpense} INR this month</h5>
+                </div>
+              </div>
+              <div>
+                <div className="inside-head">
+                  <img src={rev} alt="" />
+                  <h3>Total Revenue</h3>
+                </div>
+                <div className="outside-head">
+                  <h2>{totalRevenue} INR</h2>
+                  <h5>{monthlyTotalRevenue} INR this month</h5>
+                </div>
               </div>
             </div>
-            <p className="report-month">{monthName}</p>
+            <AddExpense
+              setExpenseModalOpen={setExpenseModalOpen}
+              setRevenueModalOpen={setRevenueModalOpen}
+              onExpenseAdded={handleExpenseAdded}
+              preferences={preferences}
+            />
+            <div className="expense-bar">
+              <div
+                className="expense-progress"
+                style={{ width: `${Number(progress)}%` }}
+              >
+                <div>
+                  <p>{monthlyTotalExpense} INR</p>
+                  <i className="fa-solid fa-play"></i>
+                </div>
+              </div>
+              <p className="report-month">{monthName}</p>
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="line-graph line-table" style={{ marginTop: "3rem" }}>
-            <h3
-              style={{
-                color: "black",
-                textAlign: "center",
-                marginBottom: "1rem",
-              }}
-            >
-              <p>Daily {view == "revenue" ? "Revenue" : "Expense"} over time</p>
-            </h3>
-            <BarChart width={800} height={300} data={getLineChartData()}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" tick={{ fill: "black", fontSize: 12 }} />
-              <YAxis domain={[0, 10000]} tick={{ fill: "black" }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "white",
-                  color: "#fff",
+          <div>
+            <div className="line-graph line-table" style={{ marginTop: "3rem" }}>
+              <h3
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  marginBottom: "1rem",
                 }}
-              />
-              <Bar
-                dataKey="amount"
-                fill="rgb(79, 201, 31)"
-                barSize={20}
-                radius={[110, 110, 0, 0]} // TopLeft, TopRight, BottomRight, BottomLeft
-              />
-            </BarChart>
+              >
+                <p>Daily {view == "revenue" ? "Revenue" : "Expense"} over time</p>
+              </h3>
+              <BarChart width={800} height={300} data={getLineChartData()}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" tick={{ fill: "black", fontSize: 12 }} />
+                <YAxis domain={[0, 10000]} tick={{ fill: "black" }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "white",
+                    color: "#fff",
+                  }}
+                />
+                <Bar
+                  dataKey="amount"
+                  fill="rgb(79, 201, 31)"
+                  barSize={20}
+                  radius={[110, 110, 0, 0]} // TopLeft, TopRight, BottomRight, BottomLeft
+                />
+              </BarChart>
+            </div>
           </div>
         </div>
-      </div>
-
-      <AddExpenseModal
-        onExpenseAdded={handleExpenseAdded}
-        isOpen={expenseModalOpen}
-        preferences={preferences}
-        onClose={() => setExpenseModalOpen(false)}
-      />
-      <AddRevenueModal
-        onExpenseAdded={handleExpenseAdded}
-        isOpen={revenueModalOpen}
-        preferences={preferences}
-        onClose={() => setRevenueModalOpen(false)}
-      />
-
-      <div
-        className="add-exp-buttons"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      ></div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100vw",
-          justifyContent: "center",
-        }}
-      ></div>
-
-      {/* ----------------------- */}
-      <div className="table-head-container">
-        <div className="table-head">
-          <h1 className="finance-report-h1" style={{ textAlign: "left" }}>
-            Your Financial Report
-          </h1>
-          <div className="table-view">
-            <button
-              className={`view-button ${view === "all" ? "active" : ""}`}
-              onClick={() => setView("all")}
-            >
-              All
-            </button>
-            <button
-              className={`view-button ${view === "expenses" ? "active" : ""}`}
-              onClick={() => setView("expenses")}
-            >
-              Expenses
-            </button>
-            <button
-              className={`view-button ${view === "revenue" ? "active" : ""}`}
-              onClick={() => setView("revenue")}
-            >
-              Revenue
-            </button>
+  
+        <AddExpenseModal
+          onExpenseAdded={handleExpenseAdded}
+          isOpen={expenseModalOpen}
+          preferences={preferences}
+          onClose={() => setExpenseModalOpen(false)}
+        />
+        <AddRevenueModal
+          onExpenseAdded={handleExpenseAdded}
+          isOpen={revenueModalOpen}
+          preferences={preferences}
+          onClose={() => setRevenueModalOpen(false)}
+        />
+  
+        <div
+          className="add-exp-buttons"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        ></div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            width: "100vw",
+            justifyContent: "center",
+          }}
+        ></div>
+  
+        {/* ----------------------- */}
+        <div className="table-head-container">
+          <div className="table-head">
+            <h1 className="finance-report-h1" style={{ textAlign: "left" }}>
+              Your Financial Report
+            </h1>
+            <div className="table-view">
+              <button
+                className={`view-button ${view === "all" ? "active" : ""}`}
+                onClick={() => setView("all")}
+              >
+                All
+              </button>
+              <button
+                className={`view-button ${view === "expenses" ? "active" : ""}`}
+                onClick={() => setView("expenses")}
+              >
+                Expenses
+              </button>
+              <button
+                className={`view-button ${view === "revenue" ? "active" : ""}`}
+                onClick={() => setView("revenue")}
+              >
+                Revenue
+              </button>
+            </div>
+          </div>
+          <div className="filter-container">
+            <Filters
+              setSortBy={setSortBy}
+              filterValues={filterValues}
+              setFilterValues={setFilterValues}
+              setSearchText={setSearchText}
+              preferences={preferences}
+            />
           </div>
         </div>
-        <div className="filter-container">
-          <Filters
-            setSortBy={setSortBy}
-            filterValues={filterValues}
-            setFilterValues={setFilterValues}
-            setSearchText={setSearchText}
-            preferences={preferences}
-          />
-        </div>
-      </div>
-      <div className="tableDiv">
-        <table className="transaction-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Transaction</th>
-              <th>Date</th>
-              {/* Dynamically render preference or service field */}
-              {preferences &&
-                Object.keys(preferences.fields).map((key) => (
-                  <th key={key}>{key}</th>
-                ))}
-              <th>Amount</th>
-              <th>Remarks</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {combinedData.map((item, index) => (
-              <tr key={item.id}>
-                <td>{index + 1}</td>
-                <td>
-                  {item.typeOfTransaction == "Expense"}
-
-                  <img
-                    width={"25px"}
-                    src={item.typeOfTransaction == "Expense" ? send : recieve}
-                    alt=""
-                  />
-                </td>
-
-                {editRowId === item.id ? (
-                  <>
-                    <td>
-                      <input
-                        className="edit-input"
-                        type="date"
-                        value={editRowData.date}
-                        onChange={(e) =>
-                          setEditRowData({
-                            ...editRowData,
-                            date: e.target.value,
-                          })
-                        }
-                      />
-                    </td>
-
-                    {item.typeOfTransaction ? (
-                      Object.keys(preferences.fields).map((key) => (
-                        <td key={key}>
+        <div className="tableDiv">
+          <table className="transaction-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Transaction</th>
+                <th>Date</th>
+                {/* Dynamically render preference or service field */}
+                {preferences &&
+                  Object.keys(preferences.fields).map((key) => (
+                    <th key={key}>{key}</th>
+                  ))}
+                <th>Amount</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {combinedData.map((item, index) => (
+                <tr key={item.id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    {item.typeOfTransaction == "Expense"}
+  
+                    <img
+                      width={"25px"}
+                      src={item.typeOfTransaction == "Expense" ? send : recieve}
+                      alt=""
+                    />
+                  </td>
+  
+                  {editRowId === item.id ? (
+                    <>
+                      <td>
+                        <input
+                          className="edit-input"
+                          type="date"
+                          value={editRowData.date}
+                          onChange={(e) =>
+                            setEditRowData({
+                              ...editRowData,
+                              date: e.target.value,
+                            })
+                          }
+                        />
+                      </td>
+  
+                      {item.typeOfTransaction ? (
+                        Object.keys(preferences.fields).map((key) => (
+                          <td key={key}>
+                            <select
+                              value={editRowData[key] || ""}
+                              onChange={(e) =>
+                                setEditRowData({
+                                  ...editRowData,
+                                  [key]: e.target.value,
+                                })
+                              }
+                            >
+                              <option value="" disabled>
+                                Select {key}
+                              </option>
+                              {preferences.fields[key].map((option) => (
+                                <option key={option} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                          </td>
+                        ))
+                      ) : (
+                        <td colSpan={Object.keys(preferences.fields).length}>
                           <select
-                            value={editRowData[key] || ""}
+                            value={editRowData.service}
                             onChange={(e) =>
                               setEditRowData({
                                 ...editRowData,
-                                [key]: e.target.value,
+                                service: e.target.value,
                               })
                             }
                           >
                             <option value="" disabled>
-                              Select {key}
+                              Select Service
                             </option>
-                            {preferences.fields[key].map((option) => (
-                              <option key={option} value={option}>
-                                {option}
+                            {serviceOptions.map((service) => (
+                              <option key={service} value={service}>
+                                {service}
                               </option>
                             ))}
                           </select>
                         </td>
-                      ))
-                    ) : (
-                      <td colSpan={Object.keys(preferences.fields).length}>
-                        <select
-                          value={editRowData.service}
+                      )}
+  
+                      <td>
+                        <input
+                          className="edit-input"
+                          type="number"
+                          value={editRowData.amount}
                           onChange={(e) =>
                             setEditRowData({
                               ...editRowData,
-                              service: e.target.value,
+                              amount: e.target.value,
                             })
                           }
-                        >
-                          <option value="" disabled>
-                            Select Service
-                          </option>
-                          {serviceOptions.map((service) => (
-                            <option key={service} value={service}>
-                              {service}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
-                    )}
-
-                    <td>
-                      <input
-                        className="edit-input"
-                        type="number"
-                        value={editRowData.amount}
-                        onChange={(e) =>
-                          setEditRowData({
-                            ...editRowData,
-                            amount: e.target.value,
-                          })
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className="edit-input"
-                        type="text"
-                        value={editRowData.remarks}
-                        onChange={(e) =>
-                          setEditRowData({
-                            ...editRowData,
-                            remarks: e.target.value,
-                          })
-                        }
-                      />
-                    </td>
-                    <td className="edit-btns">
-                      <button
-                        style={{ backgroundColor: "green" }}
-                        className="edit-btn"
-                        onClick={() =>
-                          saveEditedData(
-                            item.typeOfTransaction ? "expenses" : "revenue",
-                            item.id
-                          )
-                        }
-                      >
-                        <i
-                          style={{ color: "white" }}
-                          className="fa-solid fa-check"
-                        ></i>
-                      </button>
-                      <button
-                        style={{ backgroundColor: "red" }}
-                        className="edit-btn"
-                        onClick={() => setEditRowId(null)}
-                      >
-                        <i
-                          style={{ color: "white" }}
-                          className="fa-solid fa-xmark"
-                        ></i>
-                      </button>
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td>{item.date || "-"}</td>
-
-                    {item.typeOfTransaction ? (
-                      Object.keys(preferences.fields).map((key) => (
-                        <td key={key}>{item[key] || "-"}</td>
-                      ))
-                    ) : (
-                      <td colSpan={Object.keys(preferences.fields).length}>
-                        {item.service || "-"}
-                      </td>
-                    )}
-
-                    <td
-                      style={
-                        item.typeOfTransaction
-                          ? { color: "red", fontWeight: "800" }
-                          : { color: "green", fontWeight: "800" }
-                      }
-                    >
-                      ₹{item.amount || "0"}
-                    </td>
-                    <td>{item.remarks || "-"}</td>
-                    <td className="actionCell">
-                      <i
-                        className="fa-solid fa-pen-to-square"
-                        onClick={() => {
-                          setEditRowId(item.id);
-                          setEditRowData(item);
-                        }}
-                        title="Edit"
-                      ></i>
-                      <i
-                        className="fa-solid fa-trash"
-                        onClick={() =>
-                          handleDeleteData(
-                            item.typeOfTransaction ? "expenses" : "revenue",
-                            item.id
-                          )
-                        }
-                        title="Delete"
-                      ></i>
-                    </td>
-                  </>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* ----------------------- */}
-      {/* 
-{(view == "all" || view == "expenses") &&
-<h2 className='table-head'>Expense Overview</h2>}
-      {(view == "all" || view == "expenses") && (
-        <div className='tableDiv'>
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Type</th>
-                <th>Date</th>
-                
-                {preferences?.fields && Object.keys(preferences.fields).map((field) => (
-                  <th key={field}>{field}</th>
-                ))}
-                <th>Amount</th>
-                <th>Remarks</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-  {displayExpenses.map((expense, index) => (
-    <tr key={expense.id}>
-      <td>{index + 1}</td>
-    <td>Type</td>
-      {editRowId === expense.id ? (
-        <>
-          <td>
-            <input
-              className="edit-input"
-              type="date"
-              value={editRowData.date}
-              onChange={(e) => setEditRowData({ ...editRowData, date: e.target.value })}
-            />
-          </td>
-        
-
-          {Object.keys(preferences.fields).map((key) => (
-            <td key={key}>
-              <select
-                value={editRowData[key] || ""}
-                onChange={(e) => setEditRowData({ ...editRowData, [key]: e.target.value })}
-              >
-                <option value="" disabled>Select {key}</option>
-                {preferences.fields[key].map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </td>
-          ))}
-
-          <td>
-            <input
-              className="edit-input"
-              type="number"
-              value={editRowData.amount}
-              onChange={(e) => setEditRowData({ ...editRowData, amount: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              className="edit-input"
-              type="text"
-              value={editRowData.remarks}
-              onChange={(e) => setEditRowData({ ...editRowData, remarks: e.target.value })}
-            />
-          </td>
-          <td className="edit-btns">
-            <button style={{backgroundColor:'green'}} className="edit-btn" onClick={() => saveEditedData("expenses", expense.id)}>
-              <i style={{color:'white'}} className="fa-solid fa-check"></i>
-            </button>
-            <button style={{backgroundColor:'red'}}className="edit-btn" onClick={() => setEditRowId(null)}>
-              <i style={{color:'white'}} className="fa-solid fa-xmark"></i>
-            </button>
-          </td>
-        </>
-      ) : (
-        <>
-          <td>{expense.date || "-"}</td>
-
-          {preferences && Object.keys(preferences.fields).map((key) => (
-            <td key={key}>{expense[key] || "-"}</td>
-          ))}
-
-          <td>₹{expense.amount || "0"}</td>
-          <td>{expense.remarks || "-"}</td>
-          <td className="actionCell">
-            <i className="fa-solid fa-pen-to-square"
-            title='Edit'
-              onClick={() => {
-                setEditRowId(expense.id);
-                setEditRowData(expense);
-              }}
-              src={edit}
-              alt="Edit"
-            ></i>
-            <i className="fa-solid fa-trash" title='Delete' onClick={() => handleDeleteData("expenses", expense.id)} src={deleteImg} alt="Delete" ></i>
-          </td>
-        </>
-      )}
-    </tr>
-  ))}
-</tbody>
-
-          </table>
-        </div>)}
-
-
-
-
-   {(view == "revenue" || view == "all") &&
-   <h2 className='table-head'>Revenue Overview</h2>}
-      {(view == "revenue" || view == "all") && (
-        <div className='tableDiv'>
-       
-          <table>
-            <thead>
-              <tr>
-
-                <th>#</th>
-                <th>Date</th>
-                <th>Service</th>
-                <th>Amount</th>
-                <th>Remarks</th>
-                <th>Actions</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              {displayRevenue.length > 0 && displayRevenue.map((revenue, index) => (
-                <tr key={revenue.id}>
-                  <td>{index + 1}</td>
-
-                  {editRowId === revenue.id ? (
-                    <>
-                      <td>
-                        <input
-                          className='edit-input'
-                          type="date"
-                          value={editRowData.date}
-                          onChange={(e) => setEditRowData({ ...editRowData, date: e.target.value })}
-                        />
-                      </td>
-                      <td>
-                        <select
-                          value={editRowData.service}
-                          onChange={(e) => setEditRowData({ ...editRowData, service: e.target.value })}
-                        >
-                          <option disabled>Select Service</option>
-                          {serviceOptions.map((service) => (
-                            <option key={service} value={service}>{service}</option>
-                          ))}
-                        </select>
-                      </td>
-                      <td>
-                        <input
-                          className='edit-input'
-                          type="number"
-                          value={editRowData.amount}
-                          onChange={(e) => setEditRowData({ ...editRowData, amount: e.target.value })}
                         />
                       </td>
                       <td>
                         <input
-                          className='edit-input'
+                          className="edit-input"
                           type="text"
                           value={editRowData.remarks}
-                          onChange={(e) => setEditRowData({ ...editRowData, remarks: e.target.value })}
+                          onChange={(e) =>
+                            setEditRowData({
+                              ...editRowData,
+                              remarks: e.target.value,
+                            })
+                          }
                         />
                       </td>
-                      <td className='edit-btns'>
-                        <button className='edit-btn check' onClick={() => saveEditedData('revenue', revenue.id)}>
-                          <i className="fa-solid fa-check"></i>
+                      <td className="edit-btns">
+                        <button
+                          style={{ backgroundColor: "green" }}
+                          className="edit-btn"
+                          onClick={() =>
+                            saveEditedData(
+                              item.typeOfTransaction ? "expenses" : "revenue",
+                              item.id
+                            )
+                          }
+                        >
+                          <i
+                            style={{ color: "white" }}
+                            className="fa-solid fa-check"
+                          ></i>
                         </button>
-                        <button className='edit-btn xmark' onClick={() => setEditRowId(null)}>
-                          <i className="fa-solid fa-xmark"></i>
+                        <button
+                          style={{ backgroundColor: "red" }}
+                          className="edit-btn"
+                          onClick={() => setEditRowId(null)}
+                        >
+                          <i
+                            style={{ color: "white" }}
+                            className="fa-solid fa-xmark"
+                          ></i>
                         </button>
                       </td>
                     </>
                   ) : (
                     <>
-                      <td>{revenue.date || "-"}</td>
-                      <td>{revenue.service || "-"}</td>
-                      <td>₹{revenue.amount || "0"}</td>
-                      <td>{revenue.remarks || "-"}</td>
-                      <td className='actionCell'>
-                        <i className="fa-solid fa-pen-to-square"
+                      <td>{item.date || "-"}</td>
+  
+                      {item.typeOfTransaction ? (
+                        Object.keys(preferences.fields).map((key) => (
+                          <td key={key}>{item[key] || "-"}</td>
+                        ))
+                      ) : (
+                        <td colSpan={Object.keys(preferences.fields).length}>
+                          {item.service || "-"}
+                        </td>
+                      )}
+  
+                      <td
+                        style={
+                          item.typeOfTransaction
+                            ? { color: "red", fontWeight: "800" }
+                            : { color: "green", fontWeight: "800" }
+                        }
+                      >
+                        ₹{item.amount || "0"}
+                      </td>
+                      <td>{item.remarks || "-"}</td>
+                      <td className="actionCell">
+                        <i
+                          className="fa-solid fa-pen-to-square"
                           onClick={() => {
-                            setEditRowId(revenue.id);
-                            setEditRowData(revenue);
+                            setEditRowId(item.id);
+                            setEditRowData(item);
                           }}
-                          src={edit}
-                          alt="Edit"
+                          title="Edit"
                         ></i>
-                        <i className="fa-solid fa-trash"
-                          onClick={() => handleDeleteData('revenue', revenue.id)}
-                          src={deleteImg}
-                          alt="Delete"
+                        <i
+                          className="fa-solid fa-trash"
+                          onClick={() =>
+                            handleDeleteData(
+                              item.typeOfTransaction ? "expenses" : "revenue",
+                              item.id
+                            )
+                          }
+                          title="Delete"
                         ></i>
                       </td>
-                    
-            
                     </>
                   )}
                 </tr>
@@ -961,7 +750,17 @@ const downloadFilteredExcel = () => {
             </tbody>
           </table>
         </div>
-      )} */}
+      </>:
+      <div className="loading-expenses">
+
+        {/* <img src={load3} alt="" /> */}
+        <div className="loader-bg">
+          <div className="loader-bar"></div>
+        </div>
+        <p>Loading your finances...</p>
+      </div>
+      }
+
     </>
   );
 };

@@ -8,6 +8,7 @@ import { auth } from '../firebaseConfig'
 import { onAuthStateChanged } from 'firebase/auth'
 import Navigator from '../components/Navigator'
 import { fetchCompanyDetails } from '../services/fetchData'
+import lg from "../assets/load2.gif";
 
 const HomePage = () => {
     const [settingsView, setSettingsView] = useState(false)
@@ -55,19 +56,31 @@ const HomePage = () => {
     
   return (
     <>
-<Navbar settingsView={settingsView} setSettingsView={setSettingsView}/>
-
-{settingsView==1&&
-<div className='settingsDiv'><Settings setTriggerRefresh={setTriggerRefresh} triggerRefresh={triggerRefresh} /></div>}
-<Navigator companyDetails={companyDetails} preferences={preferences}/>
- <div style={!settingsView?{filter:'blur(0px)'}:{filter:'blur(10px)'}}>
-    <div >
+{preferences?<>
+  <Navbar settingsView={settingsView} setSettingsView={setSettingsView}/>
+  
+  {settingsView==1&&
+  <div className='settingsDiv'><Settings setTriggerRefresh={setTriggerRefresh} triggerRefresh={triggerRefresh} /></div>}
+  <Navigator companyDetails={companyDetails} preferences={preferences}/>
+   <div style={!settingsView?{filter:'blur(0px)'}:{filter:'blur(10px)'}}>
       <div >
-        {/* <h1 style={{fontSize:'25px', fontWeight:'100'}}>Track and optimize company expenses with ease.</h1> */}
+        <div >
+          {/* <h1 style={{fontSize:'25px', fontWeight:'100'}}>Track and optimize company expenses with ease.</h1> */}
+        </div>
       </div>
-    </div>
-    <ExpenseTable preferences={preferences}/>
-    </div>
+      <ExpenseTable preferences={preferences}/>
+      </div>
+</>:
+<>L <div style={{ 
+        height: "100vh", 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        backgroundColor: "#fff" 
+      }}>
+        <img src={lg} alt="Loading..." width="600px" />
+      </div></>
+}
     </>
   )
 }

@@ -343,6 +343,46 @@ option{
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     padding:30px 25px ;
 }
+.loading-expenses{
+    width: 100vw;
+    height: 40vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.loading-expenses img{
+    width:550px;
+    background-color: aqua;
+}
+.loader-bg{
+    width: 300px;
+    height: 10px;
+    border: solid black 0.5px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+}
+.loader-bar{
+    background-color: black;
+    height: 8px;
+    width: 100%;
+    animation: loaderbar 2s;
+}
+@keyframes loaderbar{
+    0%{
+        width: 0%;
+    }
+    30%{
+        width: 45%;
+    }
+    56%{
+        width: 48%;
+    }
+    100%{
+        width: 100%;
+    }
+}
 @media (max-width: 600px) {
 .tableDiv table
  {
@@ -418,5 +458,7 @@ option{
   left: 0;
   background: #fff;
 }
-
+.loading-expenses{
+    transform: scale(0.8);
+}
 }
