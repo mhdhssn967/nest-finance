@@ -88,7 +88,7 @@ const Insights = () => {
   return (
     <>
       <div><Navbar/></div>
-      <Navigator preferences={preferences}/>
+      <Navigator  preferences={preferences}/>
 
       {downloadModal&&
         <div className='download-div'><DownloadStatement setDownloadModal={setDownloadModal} preferences={preferences} allExpenses={allExpenses}/></div>}
