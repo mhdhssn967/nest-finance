@@ -8,6 +8,12 @@
     width: 100%;
     margin: 20px auto;
 }
+.credit-add{
+    background: none !important;
+    color: black !important;
+    font-weight: 800 !important;
+    margin-left: 50px;
+}
 .add{
     color: rgb(255, 255, 255);
     font-weight: 400;

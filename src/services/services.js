@@ -14,6 +14,8 @@ export const deleteData = async (type,id) => {
 
       try {
         const financeId='financialData'
+        console.log(type);
+        
         const expenseRef = doc(db, 'userData', user.uid, 'finances', financeId, type, id);
         // const expenseRef = doc(db, `users/${user.uid}/${type}`, id);
         await deleteDoc(expenseRef);

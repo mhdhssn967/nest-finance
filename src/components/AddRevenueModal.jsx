@@ -10,8 +10,7 @@ const AddRevenueModal = ({ isOpen, onClose,onExpenseAdded, serviceOptions, prefe
   console.log(preferences);
   
 
-  const [revenueDetails, setRevenueDetails]=useState({date:"",service:"",amount:"",remarks:""})
-  console.log(revenueDetails);
+  const [revenueDetails, setRevenueDetails]=useState({date:"",service:"",amount:"",remarks:"",creditType:""})
   
   const closeModal=()=>{
     setRevenueDetails({date:"",service:"",amount:"",remarks:""})
@@ -28,7 +27,9 @@ const AddRevenueModal = ({ isOpen, onClose,onExpenseAdded, serviceOptions, prefe
       return;
     }
 
-    const {date,service,amount,remarks}=revenueDetails
+    const {date,service,amount,remarks,creditType}=revenueDetails
+    console.log(revenueDetails);
+    
 
     if (!date || !amount ) {
       alert("Fill the form completely");
@@ -43,9 +44,9 @@ const financeId='financialData'
         service,
         amount,
         remarks,
+        creditType,
         createdAt: new Date(),
       });
-      onClose()
       Swal.fire({
               icon: 'success',
               title: '✔️ Revenue Added!',
@@ -62,7 +63,7 @@ const financeId='financialData'
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Add New Revenue</h2>
+        <h2>Add Credit/Revenue</h2>
         <form className="revenue-form">
           <input onChange={(e)=>setRevenueDetails({...revenueDetails,date:e.target.value})} type="date" className="input-field" />
 
@@ -83,6 +84,12 @@ const financeId='financialData'
   )}
 </select>
 
+<select onChange={(e) =>
+    setRevenueDetails({ ...revenueDetails, creditType: e.target.value })
+  } className="input-field" name="" id="">
+  <option value="revenue" selected>Revenue</option>
+  <option value="credit">Credit</option>
+</select>
 
 
           <input onChange={(e)=>setRevenueDetails({...revenueDetails,amount:e.target.value})} type="number" placeholder="Amount" className="input-field" />

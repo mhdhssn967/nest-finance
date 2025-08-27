@@ -61,7 +61,7 @@ const HomePage = () => {
   
   {settingsView==1&&
   <div className='settingsDiv'><Settings setTriggerRefresh={setTriggerRefresh} triggerRefresh={triggerRefresh} /></div>}
-  <Navigator companyDetails={companyDetails} preferences={preferences}/>
+  <Navigator preferences={preferences}/>
    <div style={!settingsView?{filter:'blur(0px)'}:{filter:'blur(10px)'}}>
       <div >
         <div >
@@ -71,7 +71,7 @@ const HomePage = () => {
       <ExpenseTable preferences={preferences}/>
       </div>
 </>:
-<>L <div style={{ 
+<> <div style={{ 
         height: "100vh", 
         display: "flex", 
         justifyContent: "center", 

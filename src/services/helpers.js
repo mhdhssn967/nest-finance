@@ -13,13 +13,16 @@ export const filterExpensesByDate = (from, to, dataArray) => {
   };
   
   export const calculateTotalAmount = (dataArray) => {
-    if (!Array.isArray(dataArray)) return 0;
-  
-    return dataArray.reduce((total, item) => {
-      const amount = parseFloat(item.amount);
-      return total + (isNaN(amount) ? 0 : amount);
-    }, 0);
-  };
+  if (!Array.isArray(dataArray)) return 0;
+
+  const total = dataArray.reduce((sum, item) => {
+    const amount = parseFloat(item.amount);
+    return sum + (isNaN(amount) ? 0 : amount);
+  }, 0);
+
+  return parseFloat(total.toFixed(2)); // ensures 2 decimal places
+};
+
   
 
 //   Pie chart

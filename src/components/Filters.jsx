@@ -52,9 +52,9 @@ const Filters = ({
           id="sort-by"
           onChange={(e) => setSortBy(e.target.value)}
         >
-          <option value='date'>Date incurred</option>
+          <option value='dateIncurred'>Date incurred</option>
           <option value='amount'>Amount</option>
-          <option value='createdAt'>Date added</option>
+          <option value='dateAdded'>Date added</option>
         </select>
       </div>
     </div>

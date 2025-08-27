@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import Insights from "./pages/Insights";
 import ProtectedRoute from "./components/ProtectedRoute";
+import RevenueInsights from "./pages/RevenueInsights";
 
 const App = () => {
   return (
@@ -24,6 +25,14 @@ const App = () => {
         element={
           <ProtectedRoute>
             <Insights />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/home/revenueinsights"
+        element={
+          <ProtectedRoute>
+            <RevenueInsights />
           </ProtectedRoute>
         }
       />

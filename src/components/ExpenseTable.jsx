@@ -48,7 +48,10 @@ const ExpenseTable = ({ preferences }) => {
 
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [sortBy, setSortBy] = useState("date");
+  const [sortBy, setSortBy] = useState("dateIncurred");
+
+  
+
 
 
 const downloadFilteredExcel = () => {
@@ -129,10 +132,10 @@ const downloadFilteredExcel = () => {
   }, [expenses, revenue]);
 
   useEffect(() => {
-    const totalExpenses = displayExpenses.reduce(
-      (acc, item) => acc + Number(item.amount),
-      0
-    );
+    const totalExpenses = parseFloat(
+  displayExpenses.reduce((acc, item) => acc + Number(item.amount), 0).toFixed(2)
+);
+
     setTotalExpenses(totalExpenses);
     const totalRevenue = displayRevenue.reduce(
       (acc, item) => acc + Number(item.amount),
@@ -256,6 +259,7 @@ const downloadFilteredExcel = () => {
   };
 
   const handleDeleteData = async (type, id) => {
+    console.log(id)
     const result = await Swal.fire({
       title: `Delete this ${type}?`,
       text: `This action cannot be undone.`,
@@ -293,9 +297,27 @@ const downloadFilteredExcel = () => {
     setDisplayExpenses(filtered);
   }, [expenses, filterValues, searchText]);
 
-  useEffect(() => {
-    const sorted = sortExpenses(displayExpenses, sortBy);
-    setExpenses(sorted);
+
+  // Sorting
+    useEffect(() => {
+    if (!combinedData || combinedData.length === 0) return;
+
+    const sortedData = [...combinedData].sort((a, b) => {
+      if (sortBy === "dateAdded") {
+        // Firestore timestamp createdAt
+        return b.createdAt.seconds - a.createdAt.seconds;
+      }
+      if (sortBy === "dateIncurred") {
+        // your string date field "YYYY-MM-DD"
+        return new Date(b.date) - new Date(a.date);
+      }
+      if (sortBy === "amount") {
+        return Number(b.amount) - Number(a.amount);
+      }
+      return 0;
+    });
+
+    setCombinedData(sortedData);
   }, [sortBy]);
 
   useEffect(() => {
@@ -532,13 +554,13 @@ const downloadFilteredExcel = () => {
                 className={`view-button ${view === "expenses" ? "active" : ""}`}
                 onClick={() => setView("expenses")}
               >
-                Expenses
+                Debit
               </button>
               <button
                 className={`view-button ${view === "revenue" ? "active" : ""}`}
                 onClick={() => setView("revenue")}
               >
-                Revenue
+                Credit
               </button>
             </div>
           </div>
@@ -578,7 +600,9 @@ const downloadFilteredExcel = () => {
   
                     <img
                       width={"25px"}
-                      src={item.typeOfTransaction == "Expense" ? send : recieve}
+                      src={item.typeOfTransaction == "Expense"  ? send : recieve
+                        
+                      }
                       alt=""
                     />
                   </td>
@@ -736,7 +760,7 @@ const downloadFilteredExcel = () => {
                           className="fa-solid fa-trash"
                           onClick={() =>
                             handleDeleteData(
-                              item.typeOfTransaction ? "expenses" : "revenue",
+                              item.typeOfTransaction=='Expense'?'expenses':'revenue',
                               item.id
                             )
                           }

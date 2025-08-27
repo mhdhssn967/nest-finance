@@ -1,5 +1,5 @@
 import { auth, db } from "../firebaseConfig";; // adjust the path as needed
-import { collection, query, orderBy, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, doc, getDoc, where } from 'firebase/firestore';
 
 export const fetchUserExpenses = async () => {
   return new Promise((resolve, reject) => {
@@ -67,4 +67,46 @@ export const fetchCompanyDetails = async (userId) => {
     console.log("No such document!");
     return null;
   }
+};
+
+// Fetchonly revenue
+export const fetchOnlyRevenue = async () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      unsubscribe(); // stop listening immediately
+
+      if (!user) {
+        return resolve([]); // no user logged in
+      }
+
+      try {
+        const financeId = 'financialData';
+        const userRevenueRef = collection(
+          db,
+          "userData",
+          user.uid,
+          "finances",
+          financeId,
+          "revenue"
+        );
+
+        // Only fetch documents where creditType === "revenue"
+        const q = query(
+          userRevenueRef,
+          where("creditType", "==", "revenue"),
+          orderBy("date", "desc")
+        );
+
+        const querySnapshot = await getDocs(q);
+        const revenueList = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        resolve(revenueList);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  });
 };

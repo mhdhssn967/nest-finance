@@ -86,7 +86,7 @@ const expenseRef = collection(db, "userData", userId, "finances", financeId, "ex
           {/* <input type="file" accept=".json" onChange={handleUpload} /> */}
 
       <div className="modal-content">
-        <h2>Add New Expense</h2>
+        <h2>Add Debited Amount</h2>
         <form className="expense-form">
           
             <input

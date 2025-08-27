@@ -109,3 +109,65 @@ label{
     }
 
 }
+
+/* Revenue chart */
+
+.revenue-table {
+  margin-top: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+}
+
+.revenue-table h3 {
+  color: #222;
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.revenue-table table {
+  width: 98%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.revenue-table thead {
+  background: #f8f9fb;
+}
+
+.revenue-table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.revenue-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #555;
+}
+
+.revenue-table tr:hover {
+  background: #f5f7fa;
+  transition: background 0.2s ease;
+}
+
+.revenue-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.revenue-table td:nth-child(4) {
+  font-weight: 600;
+  color: #2b7a0b; /* Green for amounts */
+}
