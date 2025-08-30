@@ -215,15 +215,22 @@ option{
     align-self: flex-end;
     margin-left: 10px;
 }
+ 
 .report-card{
     width: 700px;
-    margin: 30px;
+    margin: 20px;
     /* height: 350px; */
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 25px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     padding:30px 25px ;
 
+}
+.report-box{
+    border: solid 1px rgb(204, 203, 203);
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius:8px;
 }
 .report-card img{
     width: 40px;
@@ -240,10 +247,13 @@ option{
     align-items: center;
 }
 .outside-head{
-    margin-left: 50px;
+    /* margin-left: 50px; */
+    margin:10px auto;
+    
 }
 .inside-head h3{
     font-weight: 800;
+    font-size: 15px;
     color: rgb(72, 73, 73);
 }
 .inside-head img{
@@ -267,6 +277,7 @@ option{
 }
 .outside-head h2{
     font-weight: 800;
+    font-size: 15px;
 }
 .expense-progress i{
     transform: rotate(90deg);
@@ -290,6 +301,7 @@ option{
 
 .reports{
     display: flex;
+    gap: 5px;
     justify-content: space-between;
 }
 .table-head{
@@ -483,5 +495,11 @@ option{
 }
 .loading-expenses{
     transform: scale(0.8);
+}
+.inside-head h3{
+    font-size: 12px;
+}
+.outside-head h2{
+    font-size: 11px;
 }
 }

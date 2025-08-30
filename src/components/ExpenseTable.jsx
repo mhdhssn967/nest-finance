@@ -18,15 +18,13 @@ import Swal from "sweetalert2";
 import { deleteData, filterExpenses, sortExpenses } from "../services/services";
 import Filters from "./Filters";
 import { filterExpensesByDate } from "../services/helpers";
-import exp from "../assets/exp.jpg";
-import tra from "../assets/tra.jpg";
-import rev from "../assets/rev.jpg";
+
 import AddExpenseModal from "./AddExpenseModal";
 import AddRevenueModal from "./AddRevenueModal";
 import send from "../assets/send.png";
 import recieve from "../assets/recieve.png";
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
-import load3 from '../assets/load3.gif'
+
 
 const ExpenseTable = ({ preferences }) => {
   const [expenses, setExpenses] = useState([]);
@@ -36,6 +34,7 @@ const ExpenseTable = ({ preferences }) => {
   const [displayRevenue, setDisplayRevenue] = useState([]); // Display data
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [totalCredit, setTotalCredit] = useState(0);
   const [view, setView] = useState("all");
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [revenueModalOpen, setRevenueModalOpen] = useState(false);
@@ -46,6 +45,7 @@ const ExpenseTable = ({ preferences }) => {
   const [editRowData, setEditRowData] = useState({}); // stores editable data
   const [monthlyTotalExpense, setMonthlyTotalExpense] = useState(0);
   const [monthlyTotalRevenue, setMonthlyTotalRevenue] = useState(0);
+  const [monthlyTotalCredit,setMonthlyTotalCredit] = useState(0)
 
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -206,20 +206,31 @@ const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
   }, 0);
 
   // Calculate total revenues for current month
-  const totalRevenueMonth = revenue.reduce((sum, revenue) => {
-    const revenueDate = new Date(revenue.date);
-    if (
-      revenueDate.getMonth() === currentMonth &&
-      revenueDate.getFullYear() === currentYear
-    ) {
-      return sum + Number(revenue.amount);
-    }
-    return sum;
-  }, 0);
+  const totalRevenueMonth = revenue
+  .filter(item => {
+    const d = new Date(item.date);
+    return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+  })
+  .reduce((sum, item) => sum + Number(item.amount), 0);
+
+
+  // Calculating toal creditmonthly
+  const totalCreditMonth = revenue
+  .filter(item => {
+    const d = new Date(item.date);
+    return (
+      d.getMonth() === currentMonth &&
+      d.getFullYear() === currentYear &&
+      item.creditType === 'credit'
+    );
+  })
+  .reduce((sum, item) => sum + Number(item.amount), 0);
+
 
   // Format in Indian style with commas
   setMonthlyTotalExpense(totalExpenseMonth.toLocaleString("en-IN"));
   setMonthlyTotalRevenue(totalRevenueMonth.toLocaleString("en-IN"));
+  setMonthlyTotalCredit(totalCreditMonth.toLocaleString("en-IN"));
 }, [expenses, revenue]);
 
 
@@ -229,14 +240,21 @@ useEffect(() => {
     0
   );
 
-  const totalRevenue = displayRevenue.reduce(
+  const totalCredit = displayRevenue.reduce(
     (acc, item) => acc + Number(item.amount),
     0
   );
 
+  const totalRevenue = displayRevenue.reduce(
+  (acc, item) => item.creditType === 'revenue' ? acc + Number(item.amount) : acc,
+  0
+);
+
+
   // Format in Indian style (e.g. 3,00,000)
   setTotalExpenses(totalExpenses.toLocaleString("en-IN"));
   setTotalRevenue(totalRevenue.toLocaleString("en-IN"));
+  setTotalCredit((totalCredit-totalRevenue).toLocaleString("en-IN"))
 }, [displayExpenses, displayRevenue]);
 
 
@@ -529,24 +547,33 @@ useEffect(() => {
         <div className="top-container">
           <div className="report-card">
             <div className="report-head">
-              <img src={tra} alt="" />
-              <h2>Financial Snapshot</h2>
+              <i style={{fontSize:'30px',marginRight:'5px'}} className="fa-solid fa-money-bill-transfer"></i> <h2> Financial Snapshot</h2>
             </div>
             <div className="reports">
-              <div>
+              <div className="report-box">
                 <div className="inside-head">
-                  <img src={exp} alt="" />
-                  <h3>Total Expense</h3>
+                  {/* <img src={exp} alt="" /> */}
+                  <h3>Total Debited</h3>
                 </div>
                 <div className="outside-head">
                   <h2>{totalExpenses} INR</h2>
                   <h5>{monthlyTotalExpense} INR this month</h5>
                 </div>
               </div>
-              <div>
+              <div className="report-box">
                 <div className="inside-head">
-                  <img src={rev} alt="" />
-                  <h3>Total Revenue</h3>
+                  {/* <img src={rev} alt="" /> */}
+                  <h3>Total Credited</h3>
+                </div>
+                <div className="outside-head">
+                  <h2>{totalCredit} INR</h2>
+                  <h5>{monthlyTotalCredit} INR this month</h5>
+                </div>
+              </div>
+              <div className="report-box">
+                <div className="inside-head">
+                  {/* <img src={exp} alt="" /> */}
+                  <h3>Revenue</h3>
                 </div>
                 <div className="outside-head">
                   <h2>{totalRevenue} INR</h2>
