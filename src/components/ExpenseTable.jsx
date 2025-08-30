@@ -65,70 +65,53 @@ const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
   const worksheet = workbook.addWorksheet("Transactions");
 
   // ====== REPORT HEADER ======
-  // Company Name
-  worksheet.mergeCells("A1:G1");
+  worksheet.mergeCells("A1:H1");
   worksheet.getCell("A1").value = companyName || "Company Name";
   worksheet.getCell("A1").font = { size: 16, bold: true };
   worksheet.getCell("A1").alignment = { horizontal: "left" };
 
-  // Report Title
-  worksheet.mergeCells("A2:G2");
+  worksheet.mergeCells("A2:H2");
   worksheet.getCell("A2").value = "Financial Transactions Report";
   worksheet.getCell("A2").font = { size: 14, bold: true, color: { argb: "FF4F81BD" } };
   worksheet.getCell("A2").alignment = { horizontal: "left" };
 
-  // Date Range
-  if(fromDate && toDate){
-  worksheet.mergeCells("A3:G3");
-  worksheet.getCell("A3").value = `Period: ${fromDate} to ${toDate}`;
-  worksheet.getCell("A3").alignment = { horizontal: "left" };
+  if (fromDate && toDate) {
+    worksheet.mergeCells("A3:H3");
+    worksheet.getCell("A3").value = `Period: ${fromDate} to ${toDate}`;
+    worksheet.getCell("A3").alignment = { horizontal: "left" };
   }
 
-  // Generated On
-  worksheet.mergeCells("A4:G4");
+  worksheet.mergeCells("A4:H4");
   worksheet.getCell("A4").value = `Generated on: ${new Date().toLocaleDateString()}`;
   worksheet.getCell("A4").alignment = { horizontal: "left" };
 
-  worksheet.addRow([]); // empty row before table
+  worksheet.addRow([]);
 
   // ====== TABLE HEADERS ======
   worksheet.columns = [
-  { key: "id", width: 5 },
-  { key: "date", width: 15 },
-  { key: "type", width: 10 },
-  { key: "source", width: 20 },
-  { key: "category", width: 20 },
-  { key: "amount", width: 15 },
-  { key: "remarks", width: 25 },
-];
+    { key: "id", width: 5 },
+    { key: "date", width: 15 },
+    { key: "type", width: 10 },
+    { key: "source", width: 20 },
+    { key: "category", width: 20 },
+    { key: "debit", width: 15 },
+    { key: "credit", width: 15 },
+    { key: "remarks", width: 25 },
+  ];
 
-const headerRow = worksheet.addRow([
-  "#",
-  "Date",
-  "Type",
-  "Source",
-  "Category",
-  "Amount",
-  "Remarks",
-]);
-headerRow.eachCell((cell) => {
-  cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
-  cell.fill = {
-    type: "pattern",
-    pattern: "solid",
-    fgColor: { argb: "FF4F81BD" },
-  };
-  cell.alignment = { vertical: "middle", horizontal: "center" };
-});
-
-  // Style header row
-  worksheet.getRow(6).eachCell((cell) => {
+  const headerRow = worksheet.addRow([
+    "#",
+    "Date",
+    "Type",
+    "Source",
+    "Category",
+    "Debit",
+    "Credit",
+    "Remarks",
+  ]);
+  headerRow.eachCell((cell) => {
     cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
-    cell.fill = {
-      type: "pattern",
-      pattern: "solid",
-      fgColor: { argb: "FF4F81BD" }, // blue
-    };
+    cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF4F81BD" } };
     cell.alignment = { vertical: "middle", horizontal: "center" };
   });
 
@@ -146,7 +129,8 @@ headerRow.eachCell((cell) => {
       type,
       source: item.source || "-",
       category: item.category || "-",
-      amount: amountValue,
+      debit: type === "Debit" ? amountValue : null,
+      credit: type === "Credit" ? amountValue : null,
       remarks: item.remarks || "-",
     });
 
@@ -155,15 +139,16 @@ headerRow.eachCell((cell) => {
       row.getCell("date").numFmt = "dd-mmm-yyyy";
     }
 
-    // Style amount
-    const amountCell = row.getCell("amount");
-    amountCell.numFmt = '₹#,##0.00';
+    // Format debit/credit separately
+    const debitCell = row.getCell("debit");
+    const creditCell = row.getCell("credit");
+    debitCell.numFmt = creditCell.numFmt = '₹#,##0.00';
 
     if (type === "Debit") {
-      amountCell.font = { color: { argb: "FFFF0000" } }; // red
+      debitCell.font = { color: { argb: "FFFF0000" } }; // red
       totalDebit += amountValue;
     } else {
-      amountCell.font = { color: { argb: "FF00B050" } }; // green
+      creditCell.font = { color: { argb: "FF00B050" } }; // green
       totalCredit += amountValue;
     }
   });
@@ -177,13 +162,17 @@ headerRow.eachCell((cell) => {
   summaryTitle.font = { bold: true, size: 12 };
   summaryTitle.alignment = { horizontal: "center" };
 
-  worksheet.addRow({ source: "Total Debited", amount: totalDebit });
-  worksheet.lastRow.getCell("amount").numFmt = '₹#,##0.00';
-  worksheet.lastRow.getCell("amount").font = { color: { argb: "FFFF0000" }, bold: true };
+  worksheet.addRow({ source: "Total Debited", debit: totalDebit });
+  worksheet.lastRow.getCell("debit").numFmt = '₹#,##0.00';
+  worksheet.lastRow.getCell("debit").font = { color: { argb: "FFFF0000" }, bold: true };
 
-  worksheet.addRow({ source: "Total Credited", amount: totalCredit });
-  worksheet.lastRow.getCell("amount").numFmt = '₹#,##0.00';
-  worksheet.lastRow.getCell("amount").font = { color: { argb: "FF00B050" }, bold: true };
+  worksheet.addRow({ source: "Total Credited", credit: totalCredit });
+  worksheet.lastRow.getCell("credit").numFmt = '₹#,##0.00';
+  worksheet.lastRow.getCell("credit").font = { color: { argb: "FF00B050" }, bold: true };
+
+  worksheet.addRow({ source: "Net Total", credit: totalCredit - totalDebit });
+  worksheet.lastRow.getCell("credit").numFmt = '₹#,##0.00';
+  worksheet.lastRow.getCell("credit").font = { bold: true, color: { argb: "FF0000FF" } };
 
   // ====== EXPORT FILE ======
   const buffer = await workbook.xlsx.writeBuffer();
@@ -191,8 +180,9 @@ headerRow.eachCell((cell) => {
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
 
-  saveAs(blob, `${preferences.cName}_Statement_${fromDate,'_',toDate}.xlsx`);
+  saveAs(blob, `${preferences.cName}_Statement_${fromDate}_${toDate}.xlsx`);
 };
+
 
 
 
