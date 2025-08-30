@@ -51,6 +51,7 @@ const ExpenseTable = ({ preferences }) => {
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState("dateIncurred");
 
+console.log(combinedData);
 
   
   const [currentPage, setCurrentPage] = useState(1);
@@ -94,9 +95,10 @@ const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
     { key: "type", width: 10 },
     { key: "source", width: 20 },
     { key: "category", width: 20 },
+    {key: "service",width:20},
     { key: "debit", width: 15 },
     { key: "credit", width: 15 },
-    { key: "remarks", width: 25 },
+    { key: "remarks", width: 45 },
   ];
 
   const headerRow = worksheet.addRow([
@@ -105,6 +107,7 @@ const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
     "Type",
     "Source",
     "Category",
+    "Service",
     "Debit",
     "Credit",
     "Remarks",
@@ -129,8 +132,9 @@ const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
       type,
       source: item.source || "-",
       category: item.category || "-",
-      debit: type === "Debit" ? amountValue : null,
-      credit: type === "Credit" ? amountValue : null,
+      service: item.service || -"",
+      debit: type === "Debit" ? amountValue : null ,
+      credit: type === "Credit" ? amountValue : null ,
       remarks: item.remarks || "-",
     });
 
