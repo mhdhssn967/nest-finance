@@ -33,6 +33,7 @@ const Filters = ({
                 onChange={(e) =>
                   setFilterValues({ ...filterValues, [`${fieldKey}`]: e.target.value })
                 }
+                className='filter-select'
               >
                 <option value="All">All</option>
                 {options.map((option) => (

@@ -384,6 +384,28 @@ option{
         width: 100%;
     }
 }
+.pagination-controls{
+    justify-self: center;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.pagination-controls button{
+    cursor: pointer;
+}
+.control-btn{
+    background: none;
+    border: none;
+    background-color: black;
+    border-radius: 5px;
+    padding: 5px 8px;
+    margin: auto 15px;
+}
+.control-btn i{
+    color: white;
+}
 @media (max-width: 600px) {
 .tableDiv table
  {

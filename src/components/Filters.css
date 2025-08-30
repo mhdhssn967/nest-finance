@@ -79,3 +79,6 @@
     grid-template-columns: 100px 100px;
     }
 }
+.filter-select{
+    width: 100px;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
+import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import "./expenseTable.css";
 import AddExpense from "./AddExpense";
@@ -50,99 +51,203 @@ const ExpenseTable = ({ preferences }) => {
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState("dateIncurred");
 
+
   
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 100; // adjust how many rows you want per page
+
+const startIndex = (currentPage - 1) * rowsPerPage;
+const paginatedData = combinedData.slice(startIndex, startIndex + rowsPerPage);
 
 
+const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet("Transactions");
 
-const downloadFilteredExcel = () => {
-  // Define headers for the Excel sheet
-  const headers = ["#", "Date", "Amount", "Remarks","Category"];
+  // ====== REPORT HEADER ======
+  // Company Name
+  worksheet.mergeCells("A1:G1");
+  worksheet.getCell("A1").value = companyName || "Company Name";
+  worksheet.getCell("A1").font = { size: 16, bold: true };
+  worksheet.getCell("A1").alignment = { horizontal: "left" };
 
-  // Build the data rows using your source (combinedData)
-  const data = combinedData.map((item, index) => [
-    index + 1,
-    item.date || "-",
-    item.amount || 0,
-    item.remarks || "-",
-    item.category || "-"
-  ]);
+  // Report Title
+  worksheet.mergeCells("A2:G2");
+  worksheet.getCell("A2").value = "Financial Transactions Report";
+  worksheet.getCell("A2").font = { size: 14, bold: true, color: { argb: "FF4F81BD" } };
+  worksheet.getCell("A2").alignment = { horizontal: "left" };
 
-  // Combine headers and data
-  const worksheetData = [headers, ...data];
+  // Date Range
+  if(fromDate && toDate){
+  worksheet.mergeCells("A3:G3");
+  worksheet.getCell("A3").value = `Period: ${fromDate} to ${toDate}`;
+  worksheet.getCell("A3").alignment = { horizontal: "left" };
+  }
 
-  // Create worksheet and workbook
-  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
+  // Generated On
+  worksheet.mergeCells("A4:G4");
+  worksheet.getCell("A4").value = `Generated on: ${new Date().toLocaleDateString()}`;
+  worksheet.getCell("A4").alignment = { horizontal: "left" };
 
-  // Optional: Set column widths
-  worksheet["!cols"] = [
-    { wch: 5 },    // #
-    { wch: 15 },   // Date
-    { wch: 10 },   // Amount
-    { wch: 25 },   // Remarks
-  ];
+  worksheet.addRow([]); // empty row before table
 
-  // Write and download
-  const excelBuffer = XLSX.write(workbook, {
-    bookType: "xlsx",
-    type: "array",
+  // ====== TABLE HEADERS ======
+  worksheet.columns = [
+  { key: "id", width: 5 },
+  { key: "date", width: 15 },
+  { key: "type", width: 10 },
+  { key: "source", width: 20 },
+  { key: "category", width: 20 },
+  { key: "amount", width: 15 },
+  { key: "remarks", width: 25 },
+];
+
+const headerRow = worksheet.addRow([
+  "#",
+  "Date",
+  "Type",
+  "Source",
+  "Category",
+  "Amount",
+  "Remarks",
+]);
+headerRow.eachCell((cell) => {
+  cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
+  cell.fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "FF4F81BD" },
+  };
+  cell.alignment = { vertical: "middle", horizontal: "center" };
+});
+
+  // Style header row
+  worksheet.getRow(6).eachCell((cell) => {
+    cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
+    cell.fill = {
+      type: "pattern",
+      pattern: "solid",
+      fgColor: { argb: "FF4F81BD" }, // blue
+    };
+    cell.alignment = { vertical: "middle", horizontal: "center" };
   });
 
-  const blob = new Blob([excelBuffer], {
+  let totalDebit = 0;
+  let totalCredit = 0;
+
+  // ====== ADD TRANSACTION ROWS ======
+  combinedData.forEach((item, index) => {
+    const type = item.typeOfTransaction === "Expense" ? "Debit" : "Credit";
+    const amountValue = Number(item.amount || 0);
+
+    const row = worksheet.addRow({
+      id: index + 1,
+      date: item.date || "-",
+      type,
+      source: item.source || "-",
+      category: item.category || "-",
+      amount: amountValue,
+      remarks: item.remarks || "-",
+    });
+
+    // Format date
+    if (row.getCell("date").value && row.getCell("date").value !== "-") {
+      row.getCell("date").numFmt = "dd-mmm-yyyy";
+    }
+
+    // Style amount
+    const amountCell = row.getCell("amount");
+    amountCell.numFmt = '₹#,##0.00';
+
+    if (type === "Debit") {
+      amountCell.font = { color: { argb: "FFFF0000" } }; // red
+      totalDebit += amountValue;
+    } else {
+      amountCell.font = { color: { argb: "FF00B050" } }; // green
+      totalCredit += amountValue;
+    }
+  });
+
+  // ====== SUMMARY SECTION ======
+  const lastRow = worksheet.lastRow.number + 2;
+
+  worksheet.mergeCells(`A${lastRow}:E${lastRow}`);
+  const summaryTitle = worksheet.getCell(`A${lastRow}`);
+  summaryTitle.value = "Summary";
+  summaryTitle.font = { bold: true, size: 12 };
+  summaryTitle.alignment = { horizontal: "center" };
+
+  worksheet.addRow({ source: "Total Debited", amount: totalDebit });
+  worksheet.lastRow.getCell("amount").numFmt = '₹#,##0.00';
+  worksheet.lastRow.getCell("amount").font = { color: { argb: "FFFF0000" }, bold: true };
+
+  worksheet.addRow({ source: "Total Credited", amount: totalCredit });
+  worksheet.lastRow.getCell("amount").numFmt = '₹#,##0.00';
+  worksheet.lastRow.getCell("amount").font = { color: { argb: "FF00B050" }, bold: true };
+
+  // ====== EXPORT FILE ======
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
 
-  saveAs(blob, `${preferences.cName}_Statement.xlsx`);
+  saveAs(blob, `${preferences.cName}_Statement_${fromDate,'_',toDate}.xlsx`);
 };
 
 
-  useEffect(() => {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth(); // Jan = 0
-    const currentYear = currentDate.getFullYear();
 
-    // Calculate total expenses
-    const totalExpenseMonth = expenses.reduce((sum, expense) => {
-      const expenseDate = new Date(expense.date);
-      if (
-        expenseDate.getMonth() === currentMonth &&
-        expenseDate.getFullYear() === currentYear
-      ) {
-        return sum + Number(expense.amount);
-      }
-      return sum;
-    }, 0);
 
-    // Calculate total revenues
-    const totalRevenueMonth = revenue.reduce((sum, revenue) => {
-      const revenueDate = new Date(revenue.date);
-      if (
-        revenueDate.getMonth() === currentMonth &&
-        revenueDate.getFullYear() === currentYear
-      ) {
-        return sum + Number(revenue.amount);
-      }
-      return sum;
-    }, 0);
+ useEffect(() => {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth(); // Jan = 0
+  const currentYear = currentDate.getFullYear();
 
-    // Set both totals
-    setMonthlyTotalExpense(totalExpenseMonth);
-    setMonthlyTotalRevenue(totalRevenueMonth);
-  }, [expenses, revenue]);
+  // Calculate total expenses for current month
+  const totalExpenseMonth = expenses.reduce((sum, expense) => {
+    const expenseDate = new Date(expense.date);
+    if (
+      expenseDate.getMonth() === currentMonth &&
+      expenseDate.getFullYear() === currentYear
+    ) {
+      return sum + Number(expense.amount);
+    }
+    return sum;
+  }, 0);
 
-  useEffect(() => {
-    const totalExpenses = parseFloat(
-  displayExpenses.reduce((acc, item) => acc + Number(item.amount), 0).toFixed(2)
-);
+  // Calculate total revenues for current month
+  const totalRevenueMonth = revenue.reduce((sum, revenue) => {
+    const revenueDate = new Date(revenue.date);
+    if (
+      revenueDate.getMonth() === currentMonth &&
+      revenueDate.getFullYear() === currentYear
+    ) {
+      return sum + Number(revenue.amount);
+    }
+    return sum;
+  }, 0);
 
-    setTotalExpenses(totalExpenses);
-    const totalRevenue = displayRevenue.reduce(
-      (acc, item) => acc + Number(item.amount),
-      0
-    );
-    setTotalRevenue(totalRevenue);
-  }, [displayExpenses, displayRevenue]);
+  // Format in Indian style with commas
+  setMonthlyTotalExpense(totalExpenseMonth.toLocaleString("en-IN"));
+  setMonthlyTotalRevenue(totalRevenueMonth.toLocaleString("en-IN"));
+}, [expenses, revenue]);
+
+
+useEffect(() => {
+  const totalExpenses = displayExpenses.reduce(
+    (acc, item) => acc + Number(item.amount),
+    0
+  );
+
+  const totalRevenue = displayRevenue.reduce(
+    (acc, item) => acc + Number(item.amount),
+    0
+  );
+
+  // Format in Indian style (e.g. 3,00,000)
+  setTotalExpenses(totalExpenses.toLocaleString("en-IN"));
+  setTotalRevenue(totalRevenue.toLocaleString("en-IN"));
+}, [displayExpenses, displayRevenue]);
+
 
   const monthName = new Date().toLocaleString("default", { month: "long" });
   const today = new Date();
@@ -174,6 +279,8 @@ const downloadFilteredExcel = () => {
   useEffect(() => {
     const ref = filterExpensesByDate(date.from, date.to, expenses);
     setDisplayExpenses(ref);
+    const refrev = filterExpensesByDate(date.from, date.to, revenue);
+    setDisplayRevenue(refrev);
   }, [date]);
   const [filterValues, setFilterValues] = useState(
     generateDefaultFilters(preferences)
@@ -425,7 +532,7 @@ const downloadFilteredExcel = () => {
               Reset
             </button>
           </div>
-          <button className="excel-btn" onClick={downloadFilteredExcel}>Download Excel</button>
+          <button className="excel-btn" onClick={()=>downloadFilteredExcel(date.from, date.to, preferences.cName)}>Download Excel</button>
         </div>
   
         <div className="top-container">
@@ -592,16 +699,15 @@ const downloadFilteredExcel = () => {
               </tr>
             </thead>
             <tbody>
-              {combinedData.map((item, index) => (
-                <tr key={item.id}>
-                  <td>{index + 1}</td>
+  {paginatedData.map((item, index) => (
+    <tr key={item.id}>
+      <td>{startIndex + index + 1}</td>
                   <td>
                     {item.typeOfTransaction == "Expense"}
   
                     <img
                       width={"25px"}
-                      src={item.typeOfTransaction == "Expense"  ? send : recieve
-                        
+                      src={item.typeOfTransaction == "Expense"  ? send : recieve  
                       }
                       alt=""
                     />
@@ -739,12 +845,13 @@ const downloadFilteredExcel = () => {
   
                       <td
                         style={
-                          item.typeOfTransaction
+                          item.typeOfTransaction==='Expense'
                             ? { color: "red", fontWeight: "800" }
-                            : { color: "green", fontWeight: "800" }
+                            : { color: "rgb(6, 182, 6)", fontWeight: "800" }
                         }
                       >
-                        ₹{item.amount || "0"}
+                        ₹{Number(item.amount || 0).toLocaleString("en-IN")}
+
                       </td>
                       <td>{item.remarks || "-"}</td>
                       <td className="actionCell">
@@ -783,7 +890,44 @@ const downloadFilteredExcel = () => {
         </div>
         <p>Loading your finances...</p>
       </div>
+      
       }
+      <div className="pagination-controls">
+  <button className="control-btn"
+    disabled={currentPage === 1}
+    onClick={() => setCurrentPage(currentPage - 1)}
+  >
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+
+  {/* Page Numbers */}
+  {Array.from({ length: Math.ceil(combinedData.length / rowsPerPage) }, (_, i) => (
+    <button
+      key={i + 1}
+      onClick={() => setCurrentPage(i + 1)}
+      style={{
+        margin: "0 5px",
+        fontWeight: currentPage === i + 1 ? "bold" : "normal",
+        backgroundColor: currentPage === i + 1 ? "#a1a1a1ff" : "white",
+        color: currentPage === i + 1 ? "white" : "black",
+        border: "1px solid #ccc",
+        borderRadius: "4px",
+        padding: "4px 8px",
+      }}
+    >
+      {i + 1}
+    </button>
+  ))}
+
+  <button className="control-btn"
+    disabled={currentPage === Math.ceil(combinedData.length / rowsPerPage)}
+    onClick={() => setCurrentPage(currentPage + 1)}
+  >
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+</div>
+
+
 
     </>
   );
