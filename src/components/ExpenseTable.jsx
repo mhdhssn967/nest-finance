@@ -174,10 +174,7 @@ const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
   worksheet.lastRow.getCell("credit").numFmt = '₹#,##0.00';
   worksheet.lastRow.getCell("credit").font = { color: { argb: "FF00B050" }, bold: true };
 
-  worksheet.addRow({ source: "Net Total", credit: totalCredit - totalDebit });
-  worksheet.lastRow.getCell("credit").numFmt = '₹#,##0.00';
-  worksheet.lastRow.getCell("credit").font = { bold: true, color: { argb: "FF0000FF" } };
-
+ 
   // ====== EXPORT FILE ======
   const buffer = await workbook.xlsx.writeBuffer();
   const blob = new Blob([buffer], {
