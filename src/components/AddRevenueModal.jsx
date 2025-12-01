@@ -28,7 +28,6 @@ const AddRevenueModal = ({ isOpen, onClose,onExpenseAdded, serviceOptions, prefe
     }
 
     const {date,service,amount,remarks,creditType}=revenueDetails
-    console.log(revenueDetails);
     
 
     if (!date || !amount ) {

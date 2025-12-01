@@ -31,6 +31,7 @@ const ExpenseTable = ({ preferences }) => {
 
   const [date, setDate] = useState({ from: "", to: "" });
   const [displayExpenses, setDisplayExpenses] = useState([]); //Display data
+  
   const [displayRevenue, setDisplayRevenue] = useState([]); // Display data
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -50,16 +51,72 @@ const ExpenseTable = ({ preferences }) => {
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState("dateIncurred");
-
-console.log(combinedData);
-
+  const [paginatedData,setPaginatedData]=useState([])
+  console.log(paginatedData);
   
-  const [currentPage, setCurrentPage] = useState(1);
+
+  const [selectColor, setSelectColor] = useState("#d1d1d1ff");
+  const [selectedData, setSelectedData] = useState([]);
+  const [rowColors, setRowColors] = useState({});
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+
   const rowsPerPage = 100; // adjust how many rows you want per page
 
-const startIndex = (currentPage - 1) * rowsPerPage;
-const paginatedData = combinedData.slice(startIndex, startIndex + rowsPerPage);
+const handleSelectRow = (id) => {
+  setSelectedData(prev => {
+    const isSelected = prev.includes(id);
 
+    if (isSelected) {
+      // Remove row color when deselected
+      setRowColors(rc => {
+        const copy = {...rc};
+        delete copy[id];
+        return copy;
+      });
+
+      // Remove from selected rows
+      return prev.filter(item => item !== id);
+    } else {
+      // Set color for this new selected row
+      setRowColors(rc => ({
+        ...rc,
+        [id]: selectColor
+      }));
+
+      // Add to selected rows
+      return [...prev, id];
+    }
+  });
+};
+
+const calculateTotalsByColor = () => {
+  const totals = {};
+
+  selectedData.forEach(id => {
+    // Find the row
+    const row = paginatedData.find(item => item.id === id);
+    if (!row) return; // safety
+
+    const color = rowColors[id];
+    if (!color) return;
+
+    // Add amount to that color
+    totals[color] = (totals[color] || 0) + Number(row.amount);
+  });
+
+  return totals;
+};
+
+
+
+
+const startIndex = (currentPage - 1) * rowsPerPage;
+useEffect(()=>{
+const paginatedDataRef = combinedData.slice(startIndex, startIndex + rowsPerPage);
+setPaginatedData(paginatedDataRef)
+},[combinedData])
 
 const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
   const workbook = new ExcelJS.Workbook();
@@ -188,6 +245,7 @@ const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
 
 
 
+
  useEffect(() => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth(); // Jan = 0
@@ -286,7 +344,7 @@ useEffect(() => {
   }, [preferences]);
 
   useEffect(() => {
-    const ref = filterExpensesByDate(date.from, date.to, expenses);
+    const ref = filterExpensesByDate(date.from, date.to, expenses,);
     setDisplayExpenses(ref);
     const refrev = filterExpensesByDate(date.from, date.to, revenue);
     setDisplayRevenue(refrev);
@@ -509,7 +567,7 @@ useEffect(() => {
 
   return (
     <>
-      {displayExpenses.length>0?<>
+      {displayExpenses.length>-1?<>
         <div className="top-div">
           <h2>Financial Details</h2>
           <div className="date-picker-div">
@@ -663,6 +721,40 @@ useEffect(() => {
         ></div>
   
         {/* ----------------------- */}
+        <div style={{ display: "flex", gap: "10px", marginBottom: "10px",marginLeft:'50px', }}>
+  {["#f5adadff","#9bcdf7ff","#81c784",
+    "#4dd0e1","#fde8a3ff","#4db6ac","#c7acf7ff"].map(c => (
+    <div
+      key={c}
+      onClick={() => setSelectColor(c)}
+      style={{
+        width: "25px",
+        height: "25px",
+        
+        borderRadius: "50%",
+        backgroundColor: c,
+        cursor: "pointer",
+        border: selectColor === c ? "1px solid black" : "2px solid white"
+      }}
+    />
+  ))}
+</div>
+
+<div style={{display:'flex'}}>
+  {Object.entries(calculateTotalsByColor()).map(([color, total]) => (
+    <div key={color} style={{ display: "flex", alignItems: "center", gap: "10px",marginLeft:'50px' }}>
+      <div style={{
+        width: "20px",
+        height: "20px",
+        borderRadius: "50%",
+        backgroundColor: color
+      }}></div>
+      <span>{total}</span>
+    </div>
+  ))}
+</div>
+
+
         <div className="table-head-container">
           <div className="table-head">
             <h1 className="finance-report-h1" style={{ textAlign: "left" }}>
@@ -714,11 +806,22 @@ useEffect(() => {
                 <th>Amount</th>
                 <th>Remarks</th>
                 <th>Actions</th>
+                <th>credtest</th>
               </tr>
             </thead>
             <tbody>
   {paginatedData.map((item, index) => (
-    <tr key={item.id}>
+<tr
+  key={item.id}
+  onClick={() => handleSelectRow(item.id)}
+  style={{
+    backgroundColor: selectedData.includes(item.id)
+      ? rowColors[item.id]   // ❗ always use stored color
+      : ""
+  }}
+>
+
+  
       <td>{startIndex + index + 1}</td>
                   <td>
                     {item.typeOfTransaction == "Expense"}
@@ -892,6 +995,7 @@ useEffect(() => {
                           title="Delete"
                         ></i>
                       </td>
+                      <td>{item.creditType?item.creditType:"none"}</td>
                     </>
                   )}
                 </tr>

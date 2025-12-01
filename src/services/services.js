@@ -37,6 +37,7 @@ export const filterExpenses = (expenses, filters, searchText) => {
   return expenses.filter(exp => {
     // Dynamic filter checks
     for (const key in filters) {
+
       if (filters[key] !== "All" && exp[key] !== filters[key]) {
         return false;
       }

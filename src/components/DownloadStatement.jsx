@@ -7,7 +7,6 @@ const DownloadStatement = ({ preferences, allExpenses, setDownloadModal }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   console.log(startDate,endDate);
-  console.log(allExpenses);
   
   
   const [selectedItems, setSelectedItems] = useState({});

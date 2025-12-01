@@ -9,6 +9,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import Navigator from '../components/Navigator'
 import { fetchCompanyDetails } from '../services/fetchData'
 import lg from "../assets/load2.gif";
+import { uploadTransactions } from '../services/dataAddMock'
+
 
 const HomePage = () => {
     const [settingsView, setSettingsView] = useState(false)
@@ -21,6 +23,7 @@ const HomePage = () => {
     
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        console.log(user)
         if (user) {
           setUserId(user.uid);
           try {
@@ -52,7 +55,7 @@ const HomePage = () => {
   }
 }, [triggerRefresh,userId]);
 
-  
+
     
   return (
     <>
