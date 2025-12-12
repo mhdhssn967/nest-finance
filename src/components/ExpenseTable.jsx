@@ -61,8 +61,9 @@ const ExpenseTable = ({ preferences }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
+console.log(combinedData);
 
-  const rowsPerPage = 100; // adjust how many rows you want per page
+  const rowsPerPage = 75; // adjust how many rows you want per page
 
 const handleSelectRow = (id) => {
   setSelectedData(prev => {
@@ -113,10 +114,11 @@ const calculateTotalsByColor = () => {
 
 
 const startIndex = (currentPage - 1) * rowsPerPage;
-useEffect(()=>{
-const paginatedDataRef = combinedData.slice(startIndex, startIndex + rowsPerPage);
-setPaginatedData(paginatedDataRef)
-},[combinedData])
+useEffect(() => {
+  setPaginatedData(
+    combinedData.slice(startIndex, startIndex + rowsPerPage)
+  );
+}, [combinedData, currentPage]);
 
 const downloadFilteredExcel = async (fromDate, toDate, companyName) => {
   const workbook = new ExcelJS.Workbook();
